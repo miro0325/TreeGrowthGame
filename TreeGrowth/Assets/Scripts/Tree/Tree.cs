@@ -58,7 +58,8 @@ public class Tree : MonoBehaviour
     [SerializeField] Vector2 expSpwanRadius;
 
     private KeyInputEvents keyInputEvents = new();
-    
+    private Vector3 originPos;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -76,6 +77,7 @@ public class Tree : MonoBehaviour
         }
         keyInputEvents.AddKeyEvent(() => Input.GetKeyDown(KeyCode.Space), GainExp);
         keyInputEvents.AddKeyEvent(() => Input.GetMouseButtonDown(0), GainExp);
+        originPos = transform.position;
 
     }
 
@@ -83,8 +85,7 @@ public class Tree : MonoBehaviour
     private void Update()
     {
         InputKey();
-        float multiple = ((float)growth / 1000f);
-        transform.DOScale(Vector3.one + Vector3.one * multiple, 0.05f);
+        UpdateGrowth();
     }
 
     private void GainExp()
@@ -94,6 +95,14 @@ public class Tree : MonoBehaviour
         Vector2 spawnPos = new Vector2(x,y);
 
         var exp = Instantiate(expObj,spawnPos,Quaternion.identity);
+    }
+
+    private void UpdateGrowth()
+    {
+        float multiple = ((float)growth / 1000f);
+        Vector3 scale = Vector3.one + (Vector3.one * multiple) + (Vector3.one * (int)state);
+        transform.DOScale(scale, 0.05f);
+        transform.position = originPos + new Vector3(0,scale.y/2,0);
     }
 
     private void InputKey()
