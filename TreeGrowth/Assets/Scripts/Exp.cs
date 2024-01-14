@@ -5,7 +5,6 @@ using UnityEngine;
 public class Exp : MonoBehaviour
 {   
     
-
     [SerializeField] private bool isDouble = false;
     [SerializeField] private int growth;
     [SerializeField] private float power;
@@ -29,7 +28,7 @@ public class Exp : MonoBehaviour
         time += Time.deltaTime * speed;
         transform.position = CalculateBezier(startPos, middlePos, endPos,time);
     }
-
+    //2배 경험치인지 확인용 함수
     public bool IsDouble()
     {
         return isDouble;
