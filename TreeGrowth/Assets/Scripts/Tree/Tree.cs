@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class KeyInputEvents
 {
@@ -28,24 +29,38 @@ public class KeyInputEvents
     }
 }
 
+public enum TreeState
+{
+    Small = 0,
+    Medium = 1,
+    Big = 2,
+    Large = 3,
+    Huge = 4
+}
+
 public class Tree : MonoBehaviour
 {
     public static Tree Instance { get; private set; }
 
+
     [Header("Stats")]
+    
     public int increaseGrowth = 1;
+    [SerializeField] private TreeState state;
     [SerializeField] private int growth = 0;
     [SerializeField] private int fallLeafChance;
+    [SerializeField] private int doubleExpChance;
     
-
     [Header("Objects")]
     [SerializeField] private Exp expObj;
+    [SerializeField] private Exp doubleExpObj;
 
     [Header("Settings")]
     [SerializeField] Vector2 expSpwanRadius;
 
     private KeyInputEvents keyInputEvents = new();
-    
+    private Vector3 originPos;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -63,6 +78,7 @@ public class Tree : MonoBehaviour
         }
         keyInputEvents.AddKeyEvent(() => Input.GetKeyDown(KeyCode.Space), GainExp);
         keyInputEvents.AddKeyEvent(() => Input.GetMouseButtonDown(0), GainExp);
+        originPos = transform.position;
 
     }
 
@@ -70,6 +86,7 @@ public class Tree : MonoBehaviour
     private void Update()
     {
         InputKey();
+        UpdateGrowth();
     }
 
     private void GainExp()
@@ -77,8 +94,23 @@ public class Tree : MonoBehaviour
         float x = UnityEngine.Random.Range(-expSpwanRadius.x, expSpwanRadius.x);
         float y = UnityEngine.Random.Range(-expSpwanRadius.y, expSpwanRadius.y);
         Vector2 spawnPos = new Vector2(x,y);
+        int chance = UnityEngine.Random.Range(0, 100);
+        if (chance <= doubleExpChance)
+        {
+            var exp = Instantiate(doubleExpObj, spawnPos, Quaternion.identity);
+        } 
+        else
+        {
+            var exp = Instantiate(expObj, spawnPos, Quaternion.identity);
+        }
+    }
 
-        var exp = Instantiate(expObj,spawnPos,Quaternion.identity);
+    private void UpdateGrowth()
+    {
+        float multiple = ((float)growth / 1000f);
+        Vector3 scale = Vector3.one + (Vector3.one * multiple) + (Vector3.one * (int)state);
+        transform.DOScale(scale, 0.05f);
+        transform.position = originPos + new Vector3(0,scale.y/2,0);
     }
 
     private void InputKey()
@@ -102,8 +134,11 @@ public class Tree : MonoBehaviour
     {
         if(collision.CompareTag("EXP"))
         {
-            growth += increaseGrowth;
-            Destroy(collision.gameObject);
+            if(collision.TryGetComponent(out Exp exp) == true)
+            {
+                growth += (exp.IsDouble()) ? increaseGrowth * 2 : increaseGrowth;
+                Destroy(collision.gameObject);
+            }
         }
     }
 

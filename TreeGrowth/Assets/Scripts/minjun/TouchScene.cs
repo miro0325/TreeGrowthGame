@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class TouchScene : MonoBehaviour
 {
-    void delay()
+    void FadeIn()
     {
         SceneManager.LoadScene("Intro(A)");
     }
+
     public void ChangeScene()
     {
-        Invoke("delay", 2);
+        Invoke("FadeIn", 1);
     }
 }

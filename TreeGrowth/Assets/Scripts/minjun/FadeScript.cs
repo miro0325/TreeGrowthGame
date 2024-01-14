@@ -7,7 +7,7 @@ public class FadeScript : MonoBehaviour
 {
     public Image Panel;
     float time = 0f;
-    float F_time = 0.5f;
+    float F_time = 1f;
 
     public void Fade(bool start)
     {

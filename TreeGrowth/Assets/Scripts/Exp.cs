@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Exp : MonoBehaviour
-{
+{   
+    
+
+    [SerializeField] private bool isDouble = false;
+    [SerializeField] private int growth;
     [SerializeField] private float power;
     [SerializeField] private float time;
     [SerializeField] private float speed;
@@ -26,7 +30,12 @@ public class Exp : MonoBehaviour
         transform.position = CalculateBezier(startPos, middlePos, endPos,time);
     }
 
-    public Vector3 CalculateBezier(Vector3 pos1, Vector3 pos2, Vector3 pos3, float t)
+    public bool IsDouble()
+    {
+        return isDouble;
+    }
+
+    private Vector3 CalculateBezier(Vector3 pos1, Vector3 pos2, Vector3 pos3, float t)
     {
         var p12 = Vector3.Lerp(pos1, pos2, t);
         var p23 = Vector3.Lerp(pos2, pos3, t);
