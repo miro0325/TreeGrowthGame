@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class KeyInputEvents
 {
@@ -28,12 +29,24 @@ public class KeyInputEvents
     }
 }
 
+public enum TreeState
+{
+    Small = 0,
+    Medium = 1,
+    Big = 2,
+    Large = 3,
+    Huge = 4
+}
+
 public class Tree : MonoBehaviour
 {
     public static Tree Instance { get; private set; }
 
+
     [Header("Stats")]
+    
     public int increaseGrowth = 1;
+    [SerializeField] private TreeState state;
     [SerializeField] private int growth = 0;
     [SerializeField] private int fallLeafChance;
     
@@ -70,6 +83,8 @@ public class Tree : MonoBehaviour
     private void Update()
     {
         InputKey();
+        float multiple = ((float)growth / 1000f);
+        transform.DOScale(Vector3.one + Vector3.one * multiple, 0.05f);
     }
 
     private void GainExp()
