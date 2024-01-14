@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class TitleManager : MonoBehaviour
 {
@@ -23,10 +24,16 @@ public class TitleManager : MonoBehaviour
     {
         if(settingPanel.activeSelf)
         {
-            settingPanel.SetActive(false);
+            settingPanel.transform.DOScale(Vector3.zero, 1).OnComplete(() => DisableSettingPanel()) ;
         } else
         {
             settingPanel.SetActive(true);
+            settingPanel.transform.localScale = Vector3.zero;
+            settingPanel.transform.DOScale(Vector3.one, 1);
         }
+    }
+    private void DisableSettingPanel()
+    {
+        settingPanel.SetActive(false);
     }
 }

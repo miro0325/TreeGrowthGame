@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FadeScript : MonoBehaviour
+public class FadeScript1 : MonoBehaviour
 {
     public Image Panel;
     float time = 0f;
     float F_time = 1f;
 
 
-    
+    private void Start()
+    {
+        Fade(true);
+    }
     public void Fade(bool start)
     {
         if (start == true)
