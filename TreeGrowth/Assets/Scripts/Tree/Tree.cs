@@ -49,10 +49,11 @@ public class Tree : MonoBehaviour
     [SerializeField] private TreeState state;
     [SerializeField] private int growth = 0;
     [SerializeField] private int fallLeafChance;
+    [SerializeField] private int doubleExpChance;
     
-
     [Header("Objects")]
     [SerializeField] private Exp expObj;
+    [SerializeField] private Exp doubleExpObj;
 
     [Header("Settings")]
     [SerializeField] Vector2 expSpwanRadius;
@@ -93,8 +94,15 @@ public class Tree : MonoBehaviour
         float x = UnityEngine.Random.Range(-expSpwanRadius.x, expSpwanRadius.x);
         float y = UnityEngine.Random.Range(-expSpwanRadius.y, expSpwanRadius.y);
         Vector2 spawnPos = new Vector2(x,y);
-
-        var exp = Instantiate(expObj,spawnPos,Quaternion.identity);
+        int chance = UnityEngine.Random.Range(0, 100);
+        if (chance <= doubleExpChance)
+        {
+            var exp = Instantiate(doubleExpObj, spawnPos, Quaternion.identity);
+        } 
+        else
+        {
+            var exp = Instantiate(expObj, spawnPos, Quaternion.identity);
+        }
     }
 
     private void UpdateGrowth()
@@ -126,8 +134,11 @@ public class Tree : MonoBehaviour
     {
         if(collision.CompareTag("EXP"))
         {
-            growth += increaseGrowth;
-            Destroy(collision.gameObject);
+            if(collision.TryGetComponent(out Exp exp) == true)
+            {
+                growth += (exp.IsDouble()) ? increaseGrowth * 2 : increaseGrowth;
+                Destroy(collision.gameObject);
+            }
         }
     }
 
