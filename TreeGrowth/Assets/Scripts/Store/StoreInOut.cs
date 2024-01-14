@@ -11,7 +11,6 @@ public class StoreInOut : MonoBehaviour
     public Button OutButton;
     public float moveSpeed = 300.0f;
 
-    public bool isMoving = false;
     private Vector2 UptargetPosition;
     private Vector2 DowntargetPosition;
 
@@ -38,17 +37,25 @@ public class StoreInOut : MonoBehaviour
         SellButton.onClick.AddListener(InStore);
         OutButton.onClick.AddListener(OutStore);
 
-        if (rectTransform.anchoredPosition.y > 150.0f || rectTransform.anchoredPosition.y < -150.0f)
-        {
-            isMoving = false;
-        }
+        // //상점 임시 단축키 S
+        // if(Input.GetKeyDown(KeyCode.S))
+        // {
+        //     if(inStore == false)
+        //     {
+        //         InStore();
+        //     }
+        //     if(inStore == true)
+        //     {
+        //         OutStore();
+        //     }
+        // }
 
-        if (isMoving == true && inStore == true)
+        if (inStore == true)
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, UptargetPosition, moveSpeed * Time.deltaTime);
         }
 
-        if (isMoving == true && inStore == false)
+        if (inStore == false)
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, DowntargetPosition, moveSpeed * Time.deltaTime);
         }
@@ -56,13 +63,11 @@ public class StoreInOut : MonoBehaviour
 
     public void InStore()
     {      
-        isMoving = true;
         inStore = true;
     }
 
     public void OutStore()
     {
-        isMoving = true;
         inStore = false;
     }
 }
