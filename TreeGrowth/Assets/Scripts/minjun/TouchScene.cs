@@ -5,18 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class TouchScene : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void ChangeScene()
+    void delay()
     {
         SceneManager.LoadScene("Intro(A)");
+    }
+    public void ChangeScene()
+    {
+        Invoke("delay", 2);
     }
 }
