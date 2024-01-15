@@ -28,8 +28,6 @@ public class BuyAndSell : MonoBehaviour
     // 임시로 쓴 변수입니다. Tree Script와 나중에 맞춰야합니다.
     public Text Money;
     public Text Leaf;
-    public float money = 0;
-    public int leaf = 1000;
 
     void Start()
     {
@@ -51,8 +49,8 @@ public class BuyAndSell : MonoBehaviour
 
     void Update()
     {
-        Money.text = "Money: " + money.ToString();
-        Leaf.text = "Leaf: " + leaf.ToString();
+        Money.text = "Money: " + GameManager.Money.ToString();
+        Leaf.text = "Leaf: " + GameManager.Leaf.ToString();
 
         for(int i = 0; i < BuyItems_Text.Length; i++)
             BuyItems_Text[i].text = "Lv." + BuyItemLevel[i] + " " + BuyItemPrice[i];
@@ -70,7 +68,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void SellItemNumber_Plus()
     {
-        if(SellItemLeaf[ChosenNum] * (SellItemNumber + 1) > leaf)
+        if(SellItemLeaf[ChosenNum] * (SellItemNumber + 1) > GameManager.Leaf)
             SellItemNumber = 1;
         else
             SellItemNumber++;
@@ -80,7 +78,7 @@ public class BuyAndSell : MonoBehaviour
     public void SellItemNumber_Minus()
         {
             if(SellItemNumber == 1)
-                SellItemNumber = leaf / SellItemLeaf[ChosenNum];
+                SellItemNumber = GameManager.Leaf / SellItemLeaf[ChosenNum];
             else
                 SellItemNumber--;
 
@@ -88,8 +86,8 @@ public class BuyAndSell : MonoBehaviour
         }
     public void SellItemNumber_Click()
     {
-        leaf -= SellItemLeaf[ChosenNum] * SellItemNumber;
-        money += SellItemPrice[ChosenNum] * SellItemNumber;
+        GameManager.Leaf -= SellItemLeaf[ChosenNum] * SellItemNumber;
+        GameManager.Money += SellItemPrice[ChosenNum] * SellItemNumber;
         SellItemNumber = 1;
         SellItems_Text[ChosenNum].text = SellItemLeaf[ChosenNum].ToString();
         SellChoice[ChosenNum].SetActive(false);
@@ -98,7 +96,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Sell_0()
     {
-        if (leaf >= SellItemLeaf[0] && OtherButtonActive == false)
+        if (GameManager.Leaf >= SellItemLeaf[0] && OtherButtonActive == false)
         {
             OtherButtonActive = true;
             ChosenNum = 0;
@@ -116,7 +114,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Sell_1()
     {
-        if (leaf >= SellItemLeaf[1] && OtherButtonActive == false)
+        if (GameManager.Leaf >= SellItemLeaf[1] && OtherButtonActive == false)
         {
             OtherButtonActive = true;
             ChosenNum = 1;
@@ -134,7 +132,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Sell_2()
     {
-        if (leaf >= SellItemLeaf[2] && OtherButtonActive == false)
+        if (GameManager.Leaf >= SellItemLeaf[2] && OtherButtonActive == false)
         {
             OtherButtonActive = true;
             ChosenNum = 2;
@@ -152,11 +150,11 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_0()
     {
-        if (money >= BuyItemPrice[0])
+        if (GameManager.Money >= BuyItemPrice[0])
         {
             BuyItemLevel[0]++;
-            Tree.Instance.increaseGrowth += 1;
-            money -= BuyItemPrice[0];
+            //Tree.Instance.increaseGrowth += 1;
+            GameManager.Money -= BuyItemPrice[0];
             BuyItemPrice[0] *= 1.25f;
             BuyItemPrice[0] = (int)BuyItemPrice[0];
         }
@@ -168,11 +166,11 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_1()
     {
-        if (money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
+        if (GameManager.Money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
         {
             BuyItemLevel[1]++;
-            Tree.Instance.increaseGrowth = (int)(Tree.Instance.increaseGrowth * 1.2f);
-            money -= BuyItemPrice[1];
+            //Tree.Instance.increaseGrowth = (int)(Tree.Instance.increaseGrowth * 1.2f);
+            GameManager.Money -= BuyItemPrice[1];
             BuyItemPrice[1] *= 1.25f;
             BuyItemPrice[1]  = (int)BuyItemPrice[1];
         }
@@ -187,10 +185,10 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_2()
     {
-        if (money >= BuyItemPrice[2])
+        if (GameManager.Money >= BuyItemPrice[2])
         {
             BuyItemLevel[2]++;
-            money -= BuyItemPrice[2];
+            GameManager.Money -= BuyItemPrice[2];
             BuyItemPrice[2] *= 1.25f;
             BuyItemPrice[2] = (int)BuyItemPrice[2];
         }
