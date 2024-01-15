@@ -45,7 +45,6 @@ public class Tree : MonoBehaviour
 {
     public static Tree Instance { get; private set; }
 
-
     [Header("Stats")]
     
     public int increaseGrowth = 1;
@@ -53,12 +52,14 @@ public class Tree : MonoBehaviour
     [SerializeField] private int growth = 0;
     [SerializeField] private int fallLeafChance;
     [SerializeField] private int doubleExpChance;
+    [SerializeField] private float leafDropDelay;
     [SerializeField] private int[] growthLevelLimits = new int[5];
     [SerializeField] private float[] growthLevelScales = new float[5];
 
     [Header("Objects")]
     [SerializeField] private Exp expObj;
     [SerializeField] private Exp doubleExpObj;
+    [SerializeField] private Leaf leaf;
     [SerializeField] private GameObject lighting;
     [SerializeField] private Camera cam;
 
@@ -66,12 +67,14 @@ public class Tree : MonoBehaviour
     [SerializeField] Vector2 expSpwanRadius;
     [SerializeField] List<Color> levelUpColors = new();
     [SerializeField] float colorChangeDelay;
+    
 
     private KeyInputEvents keyInputEvents = new();
     private Vector3 originPos;
     private Vector3 baseScale = Vector3.zero;
     private SpriteRenderer spriteRenderer;
     private int colorIndex = 0;
+    private float curLeafDropTime = 0;
     private bool isShowLevelUpEffect = false;
 
     public int Growth
@@ -115,7 +118,22 @@ public class Tree : MonoBehaviour
     {
         InputKey();
         UpdateGrowth();
-        
+        DropLeaf();
+        curLeafDropTime += Time.deltaTime;
+    }
+
+    private void DropLeaf()
+    {
+        if(curLeafDropTime >= leafDropDelay)
+        {
+            curLeafDropTime = 0;
+            float x, y;
+            x = UnityEngine.Random.Range(-transform.localScale.x, transform.localScale.x);
+            y = UnityEngine.Random.Range(-transform.localScale.y, transform.localScale.y);
+            var spawnPos = transform.position + new Vector3(x, y, 0);
+            var _leaf = Instantiate(leaf, spawnPos,Quaternion.identity);
+            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * ((int)state /2);
+        }
     }
 
     private void LevelUp()
