@@ -9,12 +9,12 @@ public class StoreInOut : MonoBehaviour
     public Button BuyButton;
     public Button SellButton;
     public Button OutButton;
-    public float moveSpeed = 400.0f;
+    public float moveSpeed = 500.0f;
 
     private Vector2 UptargetPosition;
     private Vector2 DowntargetPosition;
 
-    public float Anchor_Y = 400.0f;
+    public float Anchor_Y = 500.0f;
 
     public bool inStore = false;
 
