@@ -31,6 +31,14 @@ public class Leaf : MonoBehaviour
 
     private void InitMousePos()
     {
+        startPos = transform.position;
+        endPos = GameManager.Instance.GetMousePos();
+        var dist = Vector2.Distance(startPos, endPos);
+       
+        if (dist > distance || isEarn)
+        {
+            return;
+        }
         rigid.gravityScale = 0;
         time = 0;
         startPos = transform.position;
@@ -49,7 +57,11 @@ public class Leaf : MonoBehaviour
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
         Debug.Log(dist);
-        if (dist > distance || isEarn) return;
+        if (dist > distance || isEarn)
+        {
+            ResetLeaf();
+            return;
+        }
         rigid.gravityScale = 0;
         time += Time.deltaTime * speed * (0.5f/dist);
         var pos = Vector3.MoveTowards(startPos, endPos, time);
