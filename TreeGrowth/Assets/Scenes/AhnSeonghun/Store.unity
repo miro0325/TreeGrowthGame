@@ -397,8 +397,6 @@ MonoBehaviour:
   OtherButtonActive: 0
   Money: {fileID: 1791228345}
   Leaf: {fileID: 1429645826}
-  money: 0
-  leaf: 1000
 --- !u!1 &171393208
 GameObject:
   m_ObjectHideFlags: 0
