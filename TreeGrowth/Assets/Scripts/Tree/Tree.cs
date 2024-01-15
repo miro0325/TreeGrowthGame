@@ -74,6 +74,14 @@ public class Tree : MonoBehaviour
     private int colorIndex = 0;
     private bool isShowLevelUpEffect = false;
 
+    public int Growth
+    {
+        get
+        {
+            return growth;
+        }
+    }
+
     public bool IsLevelUp()
     {
         return growth == growthLevelLimits[(int)state];
