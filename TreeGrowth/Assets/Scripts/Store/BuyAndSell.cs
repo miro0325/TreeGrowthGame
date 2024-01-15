@@ -26,7 +26,6 @@ public class BuyAndSell : MonoBehaviour
     public int ChosenNum;
     public bool OtherButtonActive = false;
 
-    // 임시로 쓴 변수입니다. Tree Script와 나중에 맞춰야합니다.
     public Text Money;
     public Text Leaf;
 
@@ -42,7 +41,7 @@ public class BuyAndSell : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             BuyItemLevel[i] = 0;
-            SellItems_Text[i].text = SellItemLeaf[i].ToString();
+            SellItems_Text[i].text = "Leaf: " + SellItemLeaf[i].ToString();
             SellChoice[i].SetActive(false);
         }
 
@@ -111,7 +110,7 @@ public class BuyAndSell : MonoBehaviour
         GameManager.Leaf -= SellItemLeaf[ChosenNum] * SellItemNumber;
         GameManager.Money += SellItemPrice[ChosenNum] * SellItemNumber;
         SellItemNumber = 1;
-        SellItems_Text[ChosenNum].text = SellItemLeaf[ChosenNum].ToString();
+        SellItems_Text[ChosenNum].text = "Leaf: " + SellItemLeaf[ChosenNum].ToString();
         SellChoice[ChosenNum].SetActive(false);
         OtherButtonActive = false;
     }
