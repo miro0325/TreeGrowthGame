@@ -76,9 +76,11 @@ public class Leaf : MonoBehaviour
     
     private void EarnLeaf()
     {
+        
         transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
         {
             GameManager.Leaf++;
+            Tree.Instance.SubtractLeafCount();
             Destroy(this.gameObject);
         });
 
