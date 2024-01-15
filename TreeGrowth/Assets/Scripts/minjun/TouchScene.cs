@@ -11,7 +11,10 @@ public class TouchScene : MonoBehaviour
     {
         SceneManager.LoadScene("Intro(A)");
     }
-
+    public void InGame()
+    {
+        SceneManager.LoadScene("Ingame");
+    }
     public void ChangeScene()
     {
         fade.Fade(false);
