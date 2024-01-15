@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public static int Money = 0;
+    public static float Money = 0;
     public static int Leaf = 1000;
 
     [SerializeField] private Camera cam;
