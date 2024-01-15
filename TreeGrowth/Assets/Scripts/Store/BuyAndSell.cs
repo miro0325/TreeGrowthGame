@@ -30,6 +30,8 @@ public class BuyAndSell : MonoBehaviour
     public Text Money;
     public Text Leaf;
 
+    private bool isOnBuyPanel = false;
+
     void Start()
     {
         BuyItemPrice[0] = 100; BuyItemPrice[1] = 100; BuyItemPrice[2] = 2000;
@@ -52,11 +54,27 @@ public class BuyAndSell : MonoBehaviour
     {
         Money.text = GameManager.Money.ToString();
         Leaf.text = "Leaf: " + GameManager.Leaf.ToString();
-
+        ChangePanel();
         for(int i = 0; i < BuyItemLevel.Length; i++)
         {
            BuyItemLevel_Text[i].text = "Lv." + BuyItemLevel[i].ToString();
            BuyItemPrice_Text[i].text = BuyItemPrice[i].ToString();
+        }
+    }
+
+    private void ChangePanel()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if(!isOnBuyPanel)
+            {
+                Click_Buy();
+                isOnBuyPanel = true;
+            } else
+            {
+                Click_Sell();
+                isOnBuyPanel=false;
+            }
         }
     }
 
