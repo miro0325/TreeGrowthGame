@@ -144,7 +144,7 @@ public class Tree : MonoBehaviour
             var spawnPos = transform.position + new Vector3(x, y, 0);
             var _leaf = Instantiate(leaf, spawnPos,Quaternion.identity);
             curLeafCount++;
-            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state /2));
+            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state /4));
         }
     }
 
@@ -157,8 +157,11 @@ public class Tree : MonoBehaviour
         {
             if(hit.collider.CompareTag("Tree"))
             {
-                state++;
-                baseScale = Vector3.one * growthLevelScales[(int)state];
+                if(IsLevelUp())
+                {
+                    state++;
+                    baseScale = Vector3.one * growthLevelScales[(int)state];
+                }
             }
         }
     }
@@ -225,9 +228,9 @@ public class Tree : MonoBehaviour
     private void UpdateGrowth()
     {
         float multiple = ((float)growth / (growthLevelLimits[(int)state] * 2));
-        Vector3 scale = Vector3.one + baseScale + (Vector3.one * multiple);
+        Vector3 scale = Vector3.one * 3 + baseScale + (Vector3.one * multiple);
         transform.DOScale(scale, 0.2f);
-        transform.position = originPos + new Vector3(0,scale.y/2,0);
+        transform.position = originPos + new Vector3(0,scale.y/4,0);
     }
 
     private void InputKey()
