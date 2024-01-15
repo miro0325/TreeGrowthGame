@@ -98,6 +98,7 @@ public class BuyAndSell : MonoBehaviour
         if (money >= BuyItemPrice[0])
         {
             BuyItemLevel[0]++;
+            Tree.Instance.increaseGrowth += 1;
             money -= BuyItemPrice[0];
             BuyItemPrice[0] *= 1.25f;
             BuyItemPrice[0] = (int)BuyItemPrice[0];
@@ -113,6 +114,7 @@ public class BuyAndSell : MonoBehaviour
         if (money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
         {
             BuyItemLevel[1]++;
+            Tree.Instance.increaseGrowth = (int)(Tree.Instance.increaseGrowth * 1.2f);
             money -= BuyItemPrice[1];
             BuyItemPrice[1] *= 1.25f;
             BuyItemPrice[1]  = (int)BuyItemPrice[1];
