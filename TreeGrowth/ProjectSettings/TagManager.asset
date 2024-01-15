@@ -49,6 +49,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Item
+    uniqueID: 1966343623
+    locked: 0
   - name: Tree
     uniqueID: 1979198959
     locked: 0
