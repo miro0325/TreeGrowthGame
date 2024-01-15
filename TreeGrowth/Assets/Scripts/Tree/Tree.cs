@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using System;
 using DG.Tweening;
@@ -111,7 +112,7 @@ public class Tree : MonoBehaviour
 
     private void LevelUp()
     {
-        if (!IsLevelUp()) return;
+        if (!IsLevelUp() && EventSystem.current.IsPointerOverGameObject()) return;
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 0);
         if(hit.collider != null)
@@ -156,6 +157,7 @@ public class Tree : MonoBehaviour
 
     private void GainExp()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         float x = UnityEngine.Random.Range(-expSpwanRadius.x, expSpwanRadius.x);
         float y = UnityEngine.Random.Range(-expSpwanRadius.y, expSpwanRadius.y);
         Vector2 spawnPos = new Vector2(x,y);
