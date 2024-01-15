@@ -15,7 +15,8 @@ public class BuyAndSell : MonoBehaviour
     // 현재 여기 스탯 레벨(BuyItemLevel)이랑 Tree 쪽의 스탯 레벨을 연동하지 않았습니다.
     public float [] BuyItemPrice = new float[3];
     public int [] BuyItemLevel = new int[3];
-    public Text[] BuyItems_Text = new Text[3];
+    public Text[] BuyItemPrice_Text = new Text[3];
+    public Text[] BuyItemLevel_Text = new Text[3];
 
     public int [] SellItemPrice = new int[3];
     public int [] SellItemLeaf = new int[3];
@@ -49,11 +50,14 @@ public class BuyAndSell : MonoBehaviour
 
     void Update()
     {
-        Money.text = "Money: " + GameManager.Money.ToString();
+        Money.text = GameManager.Money.ToString();
         Leaf.text = "Leaf: " + GameManager.Leaf.ToString();
 
-        for(int i = 0; i < BuyItems_Text.Length; i++)
-            BuyItems_Text[i].text = "Lv." + BuyItemLevel[i] + " " + BuyItemPrice[i];
+        for(int i = 0; i < BuyItemLevel.Length; i++)
+        {
+           BuyItemLevel_Text[i].text = "Lv." + BuyItemLevel[i].ToString();
+           BuyItemPrice_Text[i].text = BuyItemPrice[i].ToString();
+        }
     }
 
     public void Click_Buy()
