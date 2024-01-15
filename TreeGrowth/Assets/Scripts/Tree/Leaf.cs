@@ -50,7 +50,7 @@ public class Leaf : MonoBehaviour
         var dist = Vector2.Distance(startPos, endPos);
         Debug.Log(dist);
         if (dist > distance || isEarn) return;
-        
+        rigid.gravityScale = 0;
         time += Time.deltaTime * speed * (0.5f/dist);
         var pos = Vector3.MoveTowards(startPos, endPos, time);
         pos.z = 0;
