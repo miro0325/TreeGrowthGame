@@ -9,6 +9,8 @@ public class FadeScript : MonoBehaviour
     float time = 0f;
     float F_time = 1f;
 
+
+    
     public void Fade(bool start)
     {
         if (start == true)
