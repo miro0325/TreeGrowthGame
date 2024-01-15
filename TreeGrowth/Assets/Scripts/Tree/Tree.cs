@@ -67,6 +67,7 @@ public class Tree : MonoBehaviour
     [SerializeField] Vector2 expSpwanRadius;
     [SerializeField] List<Color> levelUpColors = new();
     [SerializeField] float colorChangeDelay;
+    [SerializeField] int maxLeafCount;
     
 
     private KeyInputEvents keyInputEvents = new();
@@ -76,6 +77,7 @@ public class Tree : MonoBehaviour
     private int colorIndex = 0;
     private float curLeafDropTime = 0;
     private bool isShowLevelUpEffect = false;
+    private int curLeafCount;
 
     public int Growth
     {
@@ -122,17 +124,27 @@ public class Tree : MonoBehaviour
         curLeafDropTime += Time.deltaTime;
     }
 
+    public void SubtractLeafCount()
+    {
+        curLeafCount--;
+    }
+
     private void DropLeaf()
     {
         if(curLeafDropTime >= leafDropDelay)
         {
             curLeafDropTime = 0;
+            if(curLeafCount >= maxLeafCount)
+            {
+                return;
+            }
             float x, y;
             x = UnityEngine.Random.Range(-transform.localScale.x, transform.localScale.x);
             y = UnityEngine.Random.Range(-transform.localScale.y, transform.localScale.y);
             var spawnPos = transform.position + new Vector3(x, y, 0);
             var _leaf = Instantiate(leaf, spawnPos,Quaternion.identity);
-            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * ((int)state /2);
+            curLeafCount++;
+            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state /2));
         }
     }
 
