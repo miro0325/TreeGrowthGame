@@ -6,7 +6,6 @@ public class Exp : MonoBehaviour
 {   
     
     [SerializeField] private bool isDouble = false;
-    [SerializeField] private int growth;
     [SerializeField] private float power;
     [SerializeField] private float time;
     [SerializeField] private float speed;

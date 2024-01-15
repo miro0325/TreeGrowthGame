@@ -45,7 +45,6 @@ public class Tree : MonoBehaviour
 {
     public static Tree Instance { get; private set; }
 
-
     [Header("Stats")]
     
     public int increaseGrowth = 1;
@@ -59,6 +58,7 @@ public class Tree : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Exp expObj;
     [SerializeField] private Exp doubleExpObj;
+    [SerializeField] private Leaf leaf;
     [SerializeField] private GameObject lighting;
     [SerializeField] private Camera cam;
 
@@ -108,6 +108,11 @@ public class Tree : MonoBehaviour
         InputKey();
         UpdateGrowth();
         
+    }
+
+    private void DropLeaf()
+    {
+
     }
 
     private void LevelUp()
