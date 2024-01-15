@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -139,7 +140,7 @@ public class DialogSystem : MonoBehaviour
     {
         if (dialogNumber >= dialogText.Length ) isDialogEnd = true;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             if (isDialogEnd && isTypingEnd)
             {
@@ -149,5 +150,21 @@ public class DialogSystem : MonoBehaviour
             if (!isTypingEnd) EndTyping();
             else Typing(dialogText[dialogNumber], tempText);
         }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Skip();
+        }
+    }
+
+    public void Skip()
+    {
+        isDialogEnd = true;
+        isTypingEnd = true;
+    }
+
+    public void OnClickSkipButton()
+    {
+        Skip();
     }
 }
