@@ -2,27 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
+public class FadeUtil
+{
+    private Image img;
+    
+    public FadeUtil(Image img)
+    {
+        this.img = img;
+    }
+
+    public Tween StartFadeOn()
+    {
+        return img.DOFade(1, 1);
+    }
+
+    public Tween StartFadeOff()
+    {
+        return img.DOFade(0, 1);
+    }
+
+
+}
 
 public class FadeScript1 : MonoBehaviour
 {
     public Image Panel;
+    private FadeUtil fade;
     float time = 0f;
     float F_time = 1f;
 
 
     private void Start()
     {
-        Fade(true);
+        fade = new FadeUtil(Panel);
+        Fade(true);     
     }
     public void Fade(bool start)
     {
         if (start == true)
         {
-            StartCoroutine(FadeStart());
+            fade.StartFadeOff().OnComplete(() => { Panel.gameObject.SetActive(false); });
         }
         else
         {
-            StartCoroutine(FadeEnd());
+            Panel.gameObject.SetActive(true);
+            fade.StartFadeOn();
         }
 
     }

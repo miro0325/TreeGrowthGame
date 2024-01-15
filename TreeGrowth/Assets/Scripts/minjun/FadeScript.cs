@@ -2,24 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class FadeScript : MonoBehaviour
 {
     public Image Panel;
+    FadeUtil fade;
     float time = 0f;
     float F_time = 1f;
 
+    private void Start()
+    {
+        fade = new FadeUtil(Panel);
+    }
 
-    
     public void Fade(bool start)
     {
         if (start == true)
         {
-            StartCoroutine(FadeStart());
+            fade.StartFadeOff().OnComplete(() => { Panel.gameObject.SetActive(false); });
         }
         else
         {
-            StartCoroutine(FadeEnd());
+            Panel.gameObject.SetActive(true);
+            fade.StartFadeOn();
         }
 
     }
