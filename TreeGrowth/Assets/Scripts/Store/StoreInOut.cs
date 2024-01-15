@@ -37,18 +37,18 @@ public class StoreInOut : MonoBehaviour
         SellButton.onClick.AddListener(InStore);
         OutButton.onClick.AddListener(OutStore);
 
-        // //상점 임시 단축키 S
-        // if(Input.GetKeyDown(KeyCode.S))
-        // {
-        //     if(inStore == false)
-        //     {
-        //         InStore();
-        //     }
-        //     if(inStore == true)
-        //     {
-        //         OutStore();
-        //     }
-        // }
+        //상점 임시 단축키 S
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            if(inStore == false)
+            {
+                InStore();
+            }
+            else if(inStore == true)
+            {
+                OutStore();
+            }
+        }
 
         if (inStore == true)
         {
@@ -62,7 +62,7 @@ public class StoreInOut : MonoBehaviour
     }
 
     public void InStore()
-    {      
+    {
         inStore = true;
     }
 
