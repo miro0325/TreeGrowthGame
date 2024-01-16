@@ -21,6 +21,7 @@ public class BuyAndSell : MonoBehaviour
     public int [] SellItemPrice = new int[3];
     public int [] SellItemLeaf = new int[3];
     public Text[] SellItems_Text = new Text[3];
+    public Text[] SellItemsMoney_Text = new Text[3];
     public GameObject[] SellChoice = new GameObject[3];
     public int SellItemNumber = 1; // SellItem을 한 번에 몇 개를 팔 것인가를 고를 수 있게 하는 변수
     public int ChosenNum;
@@ -43,6 +44,7 @@ public class BuyAndSell : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             BuyItemLevel[i] = 0;
+            SellItemsMoney_Text[i].text = SellItemPrice[i].ToString();
             SellItems_Text[i].text = "Leaf: " + SellItemLeaf[i].ToString();
             SellChoice[i].SetActive(false);
         }
@@ -101,6 +103,7 @@ public class BuyAndSell : MonoBehaviour
             SellItemNumber++;
 
         SellItems_Text[ChosenNum].text = SellItemNumber.ToString();
+        SellItemsMoney_Text[ChosenNum].text = (SellItemPrice[ChosenNum] * SellItemNumber).ToString();
     }
     public void SellItemNumber_Minus()
         {
@@ -109,7 +112,8 @@ public class BuyAndSell : MonoBehaviour
             else
                 SellItemNumber--;
 
-            SellItems_Text[ChosenNum].text = SellItemNumber.ToString();          
+            SellItems_Text[ChosenNum].text = SellItemNumber.ToString();
+            SellItemsMoney_Text[ChosenNum].text = (SellItemPrice[ChosenNum] * SellItemNumber).ToString();      
         }
     public void SellItemNumber_Click()
     {
@@ -117,6 +121,7 @@ public class BuyAndSell : MonoBehaviour
         GameManager.Money += SellItemPrice[ChosenNum] * SellItemNumber;
         SellItemNumber = 1;
         SellItems_Text[ChosenNum].text = "Leaf: " + SellItemLeaf[ChosenNum].ToString();
+        SellItemsMoney_Text[ChosenNum].text = SellItemPrice[ChosenNum].ToString();
         SellChoice[ChosenNum].SetActive(false);
         OtherButtonActive = false;
     }
