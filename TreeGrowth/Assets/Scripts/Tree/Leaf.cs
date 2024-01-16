@@ -14,11 +14,24 @@ public class Leaf : MonoBehaviour
     private Vector3 startPos,endPos;
     private Rigidbody2D rigid;
     private bool isEarn = false;
+    private Transform target;
+
+    private bool isEarning = false;
 
     // Start is called before the first frame update
     void Start()
     {
         Init();
+    }
+
+
+
+    public void SetTarget(Transform _target)
+    {
+        target = _target;
+        time = 0;
+        rigid.gravityScale = 0;
+        GameManager.Instance.leafList.Remove(this);
     }
 
     private void Init()
@@ -31,6 +44,10 @@ public class Leaf : MonoBehaviour
 
     private void InitMousePos()
     {
+        if(target != null)
+        {
+            return;
+        }
         startPos = transform.position;
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
@@ -47,12 +64,20 @@ public class Leaf : MonoBehaviour
 
     private void ResetLeaf()
     {
+        if (target != null)
+        {
+            return;
+        }
         rigid.gravityScale = 1;
         time = 0;
     }
 
     private void GetLeaf()
     {
+        if (target != null)
+        {
+            return;
+        }
         startPos = transform.position;
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
@@ -74,9 +99,15 @@ public class Leaf : MonoBehaviour
         }
     }
     
-    private void EarnLeaf()
+    public bool IsEarning()
     {
-        
+        return isEarning;
+    }
+
+    public void EarnLeaf()
+    {
+        isEarning = true;
+        GameManager.Instance.leafList.Remove(this);
         transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
         {
             GameManager.Leaf++;
@@ -102,6 +133,22 @@ public class Leaf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KeyInput();   
+        KeyInput(); 
+        if(target != null)
+        {
+            startPos = transform.position;
+            endPos = target.position;
+            rigid.gravityScale = 0;
+            var dist = Vector2.Distance(startPos, endPos);
+            time += Time.deltaTime * speed * (0.5f / dist);
+            var pos = Vector3.MoveTowards(startPos, endPos, time);
+            pos.z = 0;
+            transform.position = pos;
+            if (dist < 0.5f)
+            {
+                isEarn = true;
+                EarnLeaf();
+            }
+        }
     }
 }

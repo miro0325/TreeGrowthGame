@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static float Money = 0;
     public static int Leaf = 1000;
 
+    public List<Leaf> leafList = new List<Leaf>();
+
     [SerializeField] private Camera cam;
     [SerializeField] private int month = 1;
     [SerializeField] private int year = 2077;

@@ -188,6 +188,7 @@ public class Tree : MonoBehaviour
                 var spawnPos = transform.position + new Vector3(x, y, 0);
                 var _leaf = Instantiate(leaf, spawnPos, Quaternion.identity);
                 curLeafCount++;
+                GameManager.Instance.leafList.Add(_leaf);
                 _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state / 4));
             }
         }
