@@ -15,7 +15,12 @@ public class Spring : SeasonBase
         coolTIme = _coolTime;
         count = _count;
     }
-    
+
+    public override void Init()
+    {
+
+    }
+
     public override void Passive()
     {
         time += Time.deltaTime;

@@ -22,5 +22,8 @@ public abstract class SeasonBase
     {
         obj = _obj;
     }
+
+    public abstract void Init();
+
     public abstract void Passive();
 }

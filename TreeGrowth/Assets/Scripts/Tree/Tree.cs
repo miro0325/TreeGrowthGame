@@ -79,6 +79,9 @@ public class Tree : MonoBehaviour
     private float curLeafDropTime = 0;
     private bool isShowLevelUpEffect = false;
     private int curLeafCount;
+    private float extraLeafChance;
+    private float expMultiply;
+    private int extraCount = 2;
 
     public int Growth
     {
@@ -121,7 +124,7 @@ public class Tree : MonoBehaviour
     {
         InputKey();
         UpdateGrowth();
-        DropLeaf();
+        DropLeaf(extraCount);
         curLeafDropTime += Time.deltaTime;
     }
 
@@ -130,9 +133,24 @@ public class Tree : MonoBehaviour
         curLeafCount--;
     }
 
+    public void SetExtraLeafCount(int value)
+    {
+        extraCount = value; 
+    }
+
     public Vector2 GetExpSpawnSize()
     {
         return expSpwanRadius;
+    }
+
+    public void SetExpMultiplier(float value)
+    {
+        expMultiply = value;
+    }
+
+    public void SetExtraLeafChance(float value)
+    {
+        extraLeafChance = value;
     }
 
     public void AddLeafChance(float value)
@@ -140,7 +158,7 @@ public class Tree : MonoBehaviour
         fallLeafChance += value;
     }
 
-    private void DropLeaf()
+    public void DropLeaf(int count)
     {
         if(curLeafDropTime >= leafDropDelay)
         {
@@ -150,13 +168,13 @@ public class Tree : MonoBehaviour
                 return;
             }
             float chance = UnityEngine.Random.Range(0,100f);
-            int count = 0;
-            if(fallLeafChance >= chance)
+            
+            if((fallLeafChance + extraLeafChance) >= chance)
             {
-                count = 1;
-                if(fallLeafChance/2 >= chance)
+                
+                if((fallLeafChance + extraLeafChance)/2 >= chance)
                 {
-                    count = 2;
+                    count *= 2;
                 }
             } else
             {
@@ -248,13 +266,13 @@ public class Tree : MonoBehaviour
 
     private void EarnExp(int value)
     {
-        if((growth + value) > growthLevelLimits[(int)state])
+        if((growth + Mathf.RoundToInt(value * expMultiply)) > growthLevelLimits[(int)state])
         {
             growth = growthLevelLimits[(int)state];
             if (IsLevelUp() && !isShowLevelUpEffect) ShowLevelUp();
             return;
         }
-        growth += value;
+        growth += Mathf.RoundToInt(value * expMultiply);
         if (IsLevelUp() && !isShowLevelUpEffect) ShowLevelUp();
     }
 
