@@ -15,9 +15,9 @@ TagManager:
   - UI
   - Wall
   - Leaf
-  - 
-  - 
-  - 
+  - VFX
+  - Object
+  - Floor
   - 
   - 
   - 
@@ -54,4 +54,7 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 1966343623
+    locked: 0
+  - name: VFX
+    uniqueID: 2453350795
     locked: 0

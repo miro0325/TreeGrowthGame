@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -16,13 +17,13 @@ public class GameManager : MonoBehaviour
 
     public List<Leaf> leafList = new List<Leaf>();
     public SeasonType seasonType = SeasonType.Spring;
-	public SeasonType seasonType = SeasonType.Spring;
     [SerializeField] private Camera cam;
     [SerializeField] private int month = 1;
     [SerializeField] private int year = 2077;
     [SerializeField] private float time;
     [SerializeField] private Transform stormPoint;
 	[SerializeField] private Text date;
+    [SerializeField] private ParticleSystem[] weatherEffects;
     private Vector3 mousePosition;
 
     private SeasonBase curSeason;
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
     private float curTime = 0;
     private int seasonMonth = 0;
 
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
             curTime = 0;
             month += 1;
             seasonMonth += 1;
+            Debug.Log(seasonMonth);
             if(seasonMonth >= 3)
             {
                 seasonMonth = 0;
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
         if(month > 12)
         {
             month -= 12;
+            ChangeSeason();
             year++;
         }
         if(month < 10) 
@@ -86,6 +89,11 @@ public class GameManager : MonoBehaviour
 
     private void ChangeSeason()
     {
+        var par = weatherEffects[(int)seasonType];
+        //var setting = par.main;
+        //setting.loop = false;
+        par.Stop();
+        StartCoroutine(ParticleSmoothDisable(par.gameObject));
         if(month < 3)
         {
             curSeason = seasons[0];
@@ -108,8 +116,20 @@ public class GameManager : MonoBehaviour
         }
 
         if(weatherType != WeatherType.None) weatherType = WeatherType.None;
-		curSeason.Init();
+
+        par = weatherEffects[(int)seasonType];
+        par.gameObject.SetActive(true);
+        //setting = par.main;
+        //setting.loop = true;
+        par.Play();
+        curSeason.Init();
         curSeason.SeasonEvent();
+    }
+
+    private IEnumerator ParticleSmoothDisable(GameObject obj)
+    {
+        yield return new WaitForSeconds(1);
+        obj.SetActive(false);
     }
 
     public Vector3 GetMousePos()

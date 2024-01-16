@@ -81,7 +81,6 @@ public class Leaf : MonoBehaviour
         startPos = transform.position;
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
-        Debug.Log(dist);
         if (dist > distance || isEarn)
         {
             ResetLeaf();

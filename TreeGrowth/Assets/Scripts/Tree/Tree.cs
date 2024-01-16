@@ -183,7 +183,7 @@ public class Tree : MonoBehaviour
             {
                 return;
             }
-            Debug.Log(count);
+            //Debug.Log(count);
             float x, y;
             for(int i = 0; i < count; i++)
             {

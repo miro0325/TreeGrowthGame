@@ -57,7 +57,6 @@ public class MaidBot : MonoBehaviour
         for (int i = 0; i < maxCount; i++)
         {
             int random = Random.Range(0, g.leafList.Count);
-            Debug.Log(random + " " + g.leafList.Count);
             if(random >= g.leafList.Count)
             {
                 continue;
@@ -91,7 +90,8 @@ public class MaidBot : MonoBehaviour
         Debug.DrawRay(transform.position, Vector2.left * flipX, Color.green,distance);
         if(hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject.name);
+            
+            //Debug.Log(hit.collider.gameObject.name);
             flipX *= -1;
         }
     }
