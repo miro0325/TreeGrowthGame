@@ -17,6 +17,8 @@ public class DialogSystem : MonoBehaviour
         set { dialogText = value; }
     }
 
+    [SerializeField] FadeScript fade;
+
     [SerializeField] TextMeshProUGUI tempText;
     [SerializeField] float timeForChar;
     [SerializeField] float timeForChar_Fast;
@@ -146,8 +148,10 @@ public class DialogSystem : MonoBehaviour
         {
             if (isDialogEnd && isTypingEnd)
             {
-                if (isEnding)
+                if (!isEnding)
                 {
+                    ChangeScene();
+
                     SceneManager.LoadScene("TutorialScene");
                 }
                 return;
@@ -155,5 +159,11 @@ public class DialogSystem : MonoBehaviour
             if (!isTypingEnd) EndTyping();
             else Typing(dialogText[dialogNumber], tempText);
         }
+    }
+
+    public void ChangeScene()
+    {
+        fade.Fade(true);
+        Invoke("FadeIn", 1);
     }
 }

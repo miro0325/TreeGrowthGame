@@ -20,12 +20,7 @@ public class EndingSystem : MonoBehaviour
     {
         if (tree != null && tree.Growth >= 100000000)
         {
-            ShowEndingScreen();
+            SceneManager.LoadScene("EndingScene");
         }
-    }
-
-    void ShowEndingScreen()
-    {
-        SceneManager.LoadScene("EndingScene");
     }
 }
