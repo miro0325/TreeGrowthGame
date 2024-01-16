@@ -22,6 +22,10 @@ public class Goods
         {
             money-=price;
 
+        } else
+        {
+            return;
         }
+
     }
 }

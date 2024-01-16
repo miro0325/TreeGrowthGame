@@ -18,7 +18,7 @@ public class Summer : SeasonBase
     {
         Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExtraLeafChance(chance);
-        Tree.Instance.SetExpMultiplier(chance);
+        Tree.Instance.SetExpMultiplier(multiply);
     }
 
     public override void Passive()

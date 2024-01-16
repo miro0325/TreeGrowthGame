@@ -5,20 +5,41 @@ using UnityEngine;
 public class MaidBot : MonoBehaviour
 {
 
+
     [SerializeField] private float moveSpeed;
     [SerializeField] private int flipX = 1;
     [SerializeField] private float distance;
     [SerializeField] private float pickCooltime;
     [SerializeField] private float expCooltime;
     [SerializeField] private Vector2 offsetSize;
+    [SerializeField] private ParticleSystem gainEffect;
 
     public int maxCount;
     private int curCount = 0;
+    private int level = 0;
 
     private bool isPick = false;
     private float curPickTime = 0;
     private float curExpTime = 0;
     SpriteRenderer spriteRenderer;
+
+    public int Level
+    {
+        get 
+        {
+            return level;
+        }
+        set 
+        { 
+            level = value;
+            moveSpeed += moveSpeed / 100;
+            pickCooltime -= pickCooltime / 100;
+            if((float)(level / 5) > (maxCount - 5))
+            {
+                maxCount++;
+            } 
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +64,8 @@ public class MaidBot : MonoBehaviour
         curPickTime += Time.deltaTime;
         if(curPickTime > pickCooltime) { 
             PickUpLeaf();
-
+            gainEffect.Stop();
+            gainEffect.Play();
             Tree.Instance.GainExp(maxCount, true);
             
             curPickTime = 0;

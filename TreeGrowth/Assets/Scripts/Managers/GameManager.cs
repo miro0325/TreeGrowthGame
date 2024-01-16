@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform stormPoint;
 	[SerializeField] private Text date;
     [SerializeField] private ParticleSystem[] weatherEffects;
+    [SerializeField] private SpriteRenderer ground;
+    [SerializeField] private MaidBot maidBot;
     private Vector3 mousePosition;
 
     private SeasonBase curSeason;
@@ -31,7 +33,10 @@ public class GameManager : MonoBehaviour
     private float curTime = 0;
     private int seasonMonth = 0;
 
-    
+    public MaidBot GetMaidBot()
+    {
+        return maidBot;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,11 +49,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        seasons[0] = new Spring(1, 5);
+        seasons[0] = new Spring(1, 10,ground);
         seasons[1] = new Summer(20, 1.25f);
         seasons[2] = new Fall(4, 0.7f);
-        seasons[3] = new Winter(0, 0.4f);
+        seasons[3] = new Winter(0, 0.4f,ground);
         curSeason = seasons[0];
+        curSeason.Init();
     }
 
     // Update is called once per frame
@@ -117,13 +123,13 @@ public class GameManager : MonoBehaviour
 
         if(weatherType != WeatherType.None) weatherType = WeatherType.None;
 
+        curSeason.Init();
+        curSeason.SeasonEvent();
         par = weatherEffects[(int)seasonType];
         par.gameObject.SetActive(true);
         //setting = par.main;
         //setting.loop = true;
         par.Play();
-        curSeason.Init();
-        curSeason.SeasonEvent();
     }
 
     private IEnumerator ParticleSmoothDisable(GameObject obj)

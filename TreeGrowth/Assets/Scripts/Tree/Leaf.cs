@@ -41,6 +41,7 @@ public class Leaf : MonoBehaviour
         keyEvent.AddKeyEvent(() => Input.GetMouseButtonDown(0), InitMousePos);
         keyEvent.AddKeyEvent(() => Input.GetMouseButtonUp(0), ResetLeaf);
         rigid = GetComponent<Rigidbody2D>();
+        rigid.mass = 0.5f / transform.localScale.x;
     }
 
     private void InitMousePos()
@@ -111,7 +112,7 @@ public class Leaf : MonoBehaviour
         GameManager.Instance.leafList.Remove(this);
         transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
         {
-            GameManager.Leaf++;
+            GameManager.Leaf += 10 * (1+(int)Tree.Instance.State);
             Tree.Instance.SubtractLeafCount();
             Destroy(this.gameObject);
         });
