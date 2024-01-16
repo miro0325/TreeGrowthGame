@@ -32,6 +32,8 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] bool isDialogEnd = false;
     [SerializeField] bool isTypingEnd = false;
 
+    [SerializeField] bool isEnding = false;
+
     [SerializeField] int dialogNumber = 0;
 
     Coroutine coroutine = null;
@@ -144,7 +146,10 @@ public class DialogSystem : MonoBehaviour
         {
             if (isDialogEnd && isTypingEnd)
             {
-                SceneManager.LoadScene("Ingame");
+                if (isEnding)
+                {
+                    SceneManager.LoadScene("Ingame");
+                }
                 return;
             }
             if (!isTypingEnd) EndTyping();
