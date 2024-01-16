@@ -38,7 +38,8 @@ public enum TreeState
     Medium = 1,
     Big = 2,
     Large = 3,
-    Huge = 4
+    Huge = 4,
+    Giant = 5,
 }
 
 public class Tree : MonoBehaviour

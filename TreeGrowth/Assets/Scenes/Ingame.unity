@@ -2594,13 +2594,14 @@ MonoBehaviour:
   fallLeafChance: 20
   doubleExpChance: 10
   leafDropDelay: 0.5
-  growthLevelLimits: e803000010270000a086010040420f0080969800
+  growthLevelLimits: e803000010270000a086010040420f008096980000e1f505
   growthLevelScales:
   - 0
   - 1.5
   - 3.5
   - 5
   - 6.5
+  - 8
   expObj: {fileID: 5216592951453490154, guid: f515ed869aaead54089b5e3f4d98fbdf, type: 3}
   doubleExpObj: {fileID: 5216592951453490154, guid: 7d98c112e71bc6e4d9f5c1f6e683f322, type: 3}
   leaf: {fileID: 1720594322513877031, guid: 7ed27cd714bceaf47aaea8a9cf21b603, type: 3}
