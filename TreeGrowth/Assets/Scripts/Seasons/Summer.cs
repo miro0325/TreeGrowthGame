@@ -30,11 +30,9 @@ public class Summer : SeasonBase
     {
         int ran;
         ran = Random.Range(0, 9);
-        ran = 0;
         if(ran == 0)
         {
             GameManager.Instance.weatherType = WeatherType.Storm;
-
         }
     }
 }
