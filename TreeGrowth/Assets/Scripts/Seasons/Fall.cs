@@ -21,6 +21,8 @@ public class Fall : SeasonBase
     {
         Tree.Instance.SetExtraLeafCount(count);
         Tree.Instance.SetExpMultiplier(multiply);
+        Tree.Instance.SetExtraLeafCount(2);
+        Tree.Instance.SetExtraLeafChance(10);
     }
 
     public override void Passive()

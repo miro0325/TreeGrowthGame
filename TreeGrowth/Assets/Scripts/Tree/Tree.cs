@@ -40,6 +40,7 @@ public enum TreeState
     Large = 3,
     Huge = 4,
     Giant = 5,
+    Clear = 6,
 }
 
 public class Tree : MonoBehaviour
@@ -61,7 +62,9 @@ public class Tree : MonoBehaviour
     [SerializeField] private Exp expObj;
     [SerializeField] private Exp doubleExpObj;
     [SerializeField] private Leaf[] leaves = new Leaf[3];
+    [SerializeField] private Sprite[] trees = new Sprite[5];
     [SerializeField] private GameObject lighting;
+    [SerializeField] private ParticleSystem levelUpEffect;
     [SerializeField] private Camera cam;
 
     [Header("Settings")]
@@ -91,8 +94,17 @@ public class Tree : MonoBehaviour
         }
     }
 
+    public TreeState State
+    {
+        get
+        {
+            return state;
+        }
+    }
+
     public bool IsLevelUp()
     {
+        if(state == TreeState.Clear) return false;
         return growth == growthLevelLimits[(int)state];
     }
 
@@ -124,7 +136,7 @@ public class Tree : MonoBehaviour
     {
         InputKey();
         UpdateGrowth();
-        DropLeaf(extraCount);
+        DropLeaf(extraCount + (int)state);
         curLeafDropTime += Time.deltaTime;
     }
 
@@ -210,6 +222,8 @@ public class Tree : MonoBehaviour
                 if(IsLevelUp())
                 {
                     state++;
+                    if(trees.Length > (int)state)
+                        spriteRenderer.sprite = trees[(int)state];
                     baseScale = Vector3.one * growthLevelScales[(int)state];
                 }
             }
@@ -223,12 +237,17 @@ public class Tree : MonoBehaviour
         {
             spriteRenderer.DOColor(Color.white, colorChangeDelay);
             lighting.SetActive(false);
+            
+            levelUpEffect.gameObject.SetActive(false);
+
             isShowLevelUpEffect = false;
             return;
         }
         if(!lighting.activeSelf)
         {
             lighting.SetActive(true);
+            levelUpEffect.gameObject.SetActive(true);
+            levelUpEffect.Play();
         }
         if (levelUpColors.Count > 0)
         {

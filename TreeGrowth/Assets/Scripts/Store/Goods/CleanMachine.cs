@@ -11,5 +11,15 @@ public class CleanMachine : Goods
     public override void Buy(ref float money)
     {
         base.Buy(ref money);
+        var bot = GameManager.Instance.GetMaidBot();
+        if (!bot.gameObject.activeSelf)
+        {
+            bot.gameObject.SetActive(true);
+            bot.Level++;
+            return;
+        } else
+        {
+            bot.Level++;
+        }
     }
 }

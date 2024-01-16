@@ -12,7 +12,7 @@ public class WateringCan : Goods
     public override void Buy(ref float money)
     {
         base.Buy(ref money);
-        Tree.Instance.increaseGrowth = Mathf.RoundToInt((float)(Tree.Instance.increaseGrowth * 1.5f));
+        Tree.Instance.increaseGrowth += (1 + Mathf.RoundToInt((float)(Tree.Instance.increaseGrowth * 0.1f)));
     }
 
 }
