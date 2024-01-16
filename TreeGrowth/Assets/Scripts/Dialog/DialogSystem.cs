@@ -124,7 +124,7 @@ public class DialogSystem : MonoBehaviour
         }
     }
 
-    
+
     void Start()
     {
         if (Instance == null) Instance = this;
@@ -138,7 +138,7 @@ public class DialogSystem : MonoBehaviour
 
     void Update()
     {
-        if (dialogNumber >= dialogText.Length ) isDialogEnd = true;
+        if (dialogNumber >= dialogText.Length) isDialogEnd = true;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
@@ -150,21 +150,5 @@ public class DialogSystem : MonoBehaviour
             if (!isTypingEnd) EndTyping();
             else Typing(dialogText[dialogNumber], tempText);
         }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Skip();
-        }
-    }
-
-    public void Skip()
-    {
-        isDialogEnd = true;
-        isTypingEnd = true;
-    }
-
-    public void OnClickSkipButton()
-    {
-        Skip();
     }
 }
