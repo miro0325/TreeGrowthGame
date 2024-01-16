@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     public List<Leaf> leafList = new List<Leaf>();
     public SeasonType seasonType = SeasonType.Spring;
-	public SeasonType seasonType = SeasonType.Spring;
     [SerializeField] private Camera cam;
     [SerializeField] private int month = 1;
     [SerializeField] private int year = 2077;

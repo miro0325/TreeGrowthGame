@@ -18,7 +18,7 @@ public class EndingSystem : MonoBehaviour
     }
     void CheckEndingCondition()
     {
-        if (tree != null && tree.Growth >= 10000000) // 나무의 성장도가 1조가 되면
+        if (tree != null && tree.Growth >= 100000000)
         {
             ShowEndingScreen();
         }
