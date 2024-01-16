@@ -29,6 +29,8 @@ public class BuyAndSell : MonoBehaviour
     public Text Money;
     public Text Leaf;
 
+    private Goods[] goodsArray = new Goods[3];
+
     private bool isOnBuyPanel = false;
 
     void Start()
@@ -47,6 +49,10 @@ public class BuyAndSell : MonoBehaviour
 
         Buy_rectTransform = BuyBar.GetComponent<RectTransform>();
         Sell_rectTransform = SellBar.GetComponent<RectTransform>();
+
+        goodsArray[0] = new WateringCan(BuyItemPrice[0]);
+        goodsArray[1] = new Fertilizer(BuyItemPrice[1]);
+        goodsArray[2] = new CleanMachine(BuyItemPrice[2]);
     }
 
     void Update()
@@ -174,10 +180,10 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[0])
         {
             BuyItemLevel[0]++;
-            //Tree.Instance.increaseGrowth += 1;
-            GameManager.Money -= BuyItemPrice[0];
+            goodsArray[0].Buy(ref GameManager.Money);
             BuyItemPrice[0] *= 1.25f;
             BuyItemPrice[0] = (int)BuyItemPrice[0];
+            goodsArray[0].InitPrice(BuyItemPrice[0]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.
@@ -190,10 +196,11 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
         {
             BuyItemLevel[1]++;
-            //Tree.Instance.increaseGrowth = (int)(Tree.Instance.increaseGrowth * 1.2f);
-            GameManager.Money -= BuyItemPrice[1];
+            goodsArray[1].Buy(ref GameManager.Money);
+            //GameManager.Money -= BuyItemPrice[1];
             BuyItemPrice[1] *= 1.25f;
             BuyItemPrice[1]  = (int)BuyItemPrice[1];
+            goodsArray[1].InitPrice(BuyItemPrice[1]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.
@@ -209,9 +216,11 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[2])
         {
             BuyItemLevel[2]++;
-            GameManager.Money -= BuyItemPrice[2];
+            goodsArray[2].Buy(ref GameManager.Money);
+            //GameManager.Money -= BuyItemPrice[2];
             BuyItemPrice[2] *= 1.25f;
             BuyItemPrice[2] = (int)BuyItemPrice[2];
+            goodsArray[2].InitPrice(BuyItemPrice[2]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.
