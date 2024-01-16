@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         if(month > 12)
         {
             month -= 12;
-            ChangeSeason();
+            //ChangeSeason();
             year++;
         }
         if(month < 10) 
@@ -100,25 +100,25 @@ public class GameManager : MonoBehaviour
         //setting.loop = false;
         par.Stop();
         StartCoroutine(ParticleSmoothDisable(par.gameObject));
-        if(month < 3)
+        if(month >= 12 || month < 3)
+        {
+            curSeason = seasons[3];
+            seasonType = SeasonType.Winter;
+        }
+        else if(month >= 3 && month < 6)
         {
             curSeason = seasons[0];
             seasonType = SeasonType.Spring;
         }
-        else if(month > 3 && month <= 6)
+        else if(month >= 6 && month < 9)
         {
             curSeason = seasons[1];
             seasonType = SeasonType.Summer;
         }
-        else if(month > 6 && month <= 9)
+        else if(month >= 9 && month < 12)
         {
             curSeason = seasons[2];
             seasonType = SeasonType.Fall;
-        }
-        else if(month > 9 && month <= 12)
-        {
-            curSeason = seasons[3];
-            seasonType = SeasonType.Winter;
         }
 
         if(weatherType != WeatherType.None) weatherType = WeatherType.None;
