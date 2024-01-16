@@ -6,7 +6,7 @@ using System;
 using DG.Tweening;
 
 
-//Å° ÀÔ·Â ÀÌº¥Æ® Å¬·¡½º
+//Å° ï¿½Ô·ï¿½ ï¿½Ìºï¿½Æ® Å¬ï¿½ï¿½ï¿½ï¿½
 public class KeyInputEvents
 {
     private Dictionary<Func<bool>, Action> keyEvents = new();
@@ -60,7 +60,7 @@ public class Tree : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Exp expObj;
     [SerializeField] private Exp doubleExpObj;
-    [SerializeField] private Leaf leaf;
+    [SerializeField] private Leaf[] leaves = new Leaf[3];
     [SerializeField] private GameObject lighting;
     [SerializeField] private Camera cam;
 
@@ -128,6 +128,8 @@ public class Tree : MonoBehaviour
         curLeafDropTime += Time.deltaTime;
     }
 
+
+
     public void SubtractLeafCount()
     {
         curLeafCount--;
@@ -160,6 +162,7 @@ public class Tree : MonoBehaviour
 
     public void DropLeaf(int count)
     {
+        
         if(curLeafDropTime >= leafDropDelay)
         {
             curLeafDropTime = 0;
@@ -180,16 +183,17 @@ public class Tree : MonoBehaviour
             {
                 return;
             }
+            Debug.Log(count);
             float x, y;
             for(int i = 0; i < count; i++)
             {
                 x = UnityEngine.Random.Range(-transform.localScale.x, transform.localScale.x);
                 y = UnityEngine.Random.Range(-transform.localScale.y, transform.localScale.y);
                 var spawnPos = transform.position + new Vector3(x, y, 0);
-                var _leaf = Instantiate(leaf, spawnPos, Quaternion.identity);
+                var _leaf = Instantiate(leaves[(int)GameManager.Instance.seasonType], spawnPos, Quaternion.identity);
                 curLeafCount++;
                 GameManager.Instance.leafList.Add(_leaf);
-                _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state / 4));
+                _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state / 6));
             }
         }
     }
@@ -211,7 +215,7 @@ public class Tree : MonoBehaviour
             }
         }
     }
-    //·¹º§¾÷ °¡´ÉÇÒ ½Ã È¿°ú¸¦ ÁÖ´Â ÇÔ¼ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     private void ShowLevelUp()
     {
         isShowLevelUpEffect = true;

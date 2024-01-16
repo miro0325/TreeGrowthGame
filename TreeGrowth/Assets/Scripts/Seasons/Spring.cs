@@ -18,7 +18,7 @@ public class Spring : SeasonBase
 
     public override void Init()
     {
-
+        Tree.Instance.SetExtraLeafCount(2);
     }
 
     public override void Passive()

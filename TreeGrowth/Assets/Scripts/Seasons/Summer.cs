@@ -10,12 +10,13 @@ public class Summer : SeasonBase
     {
         chance = _chance;
         multiply = _multiply;
-        Tree.Instance.SetExtraLeafChance(chance);
-        Tree.Instance.SetExpMultiplier(multiply);
+        //Tree.Instance.SetExtraLeafChance(chance);
+        //Tree.Instance.SetExpMultiplier(multiply);
     }
 
     public override void Init()
     {
+        Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExtraLeafChance(chance);
         Tree.Instance.SetExpMultiplier(chance);
     }

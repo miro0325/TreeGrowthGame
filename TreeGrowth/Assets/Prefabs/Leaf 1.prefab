@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1720594322513877028}
   - component: {fileID: 1720594322513877031}
   - component: {fileID: 1720594322513877048}
-  m_Layer: 7
-  m_Name: Leaf
+  m_Layer: 6
+  m_Name: Leaf 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 1966343623
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 239780458cf8a7c44ac7a52c789e940c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 36dda1b3a07903542aa60b7338244df6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -10,8 +10,8 @@ public class Winter : SeasonBase
     public Winter( int _count,float _multiply) : base() {
         multiply = _multiply;
         count = _count;
-        Tree.Instance.SetExtraLeafCount(count);
-        Tree.Instance.SetExpMultiplier(multiply);
+        //Tree.Instance.SetExtraLeafCount(count);
+        //Tree.Instance.SetExpMultiplier(multiply);
     }
     
     public override void Init()
