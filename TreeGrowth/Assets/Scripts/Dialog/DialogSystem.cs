@@ -148,7 +148,7 @@ public class DialogSystem : MonoBehaviour
             {
                 if (isEnding)
                 {
-                    SceneManager.LoadScene("Ingame");
+                    SceneManager.LoadScene("TutorialScene");
                 }
                 return;
             }

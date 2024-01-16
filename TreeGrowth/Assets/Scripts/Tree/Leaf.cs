@@ -14,6 +14,7 @@ public class Leaf : MonoBehaviour
     private Vector3 startPos,endPos;
     private Rigidbody2D rigid;
     private bool isEarn = false;
+    private bool isEarnStorm = false;
     private Transform target;
 
     private bool isEarning = false;
@@ -44,7 +45,7 @@ public class Leaf : MonoBehaviour
 
     private void InitMousePos()
     {
-        if(target != null)
+        if(target != null || isEarn || isEarnStorm)
         {
             return;
         }
@@ -52,7 +53,7 @@ public class Leaf : MonoBehaviour
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
        
-        if (dist > distance || isEarn)
+        if (dist > distance || isEarn || isEarnStorm)
         {
             return;
         }
@@ -81,7 +82,8 @@ public class Leaf : MonoBehaviour
         startPos = transform.position;
         endPos = GameManager.Instance.GetMousePos();
         var dist = Vector2.Distance(startPos, endPos);
-        if (dist > distance || isEarn)
+        
+        if (dist > distance || isEarn || isEarnStorm)
         {
             ResetLeaf();
             return;
@@ -140,7 +142,6 @@ public class Leaf : MonoBehaviour
         transform.position = pos;
         if(dist < 0.5f)
         {
-            isEarn = true;
             isEarning = true;
             GameManager.Instance.leafList.Remove(this);
             transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
@@ -155,7 +156,7 @@ public class Leaf : MonoBehaviour
     void Update()
     {
         KeyInput(); 
-        if(target != null)
+        if(target != null && isEarnStorm == false)
         {
             startPos = transform.position;
             endPos = target.position;
@@ -171,6 +172,18 @@ public class Leaf : MonoBehaviour
                 EarnLeaf();
             }
         }
-        if(GameManager.Instance.weatherType == WeatherType.Storm) Storm();
+        if(GameManager.Instance.weatherType == WeatherType.Storm && isEarn == false) isEarnStorm = true;
+        if(isEarnStorm) Storm();
+        if(transform.position.y < -10) 
+        {
+            isEarn = true;
+            isEarning = true;
+            GameManager.Instance.leafList.Remove(this);
+            transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
+            {
+                Tree.Instance.SubtractLeafCount();
+                Destroy(this.gameObject);
+            });
+        }
     }
 }
