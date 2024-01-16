@@ -107,7 +107,7 @@ public class Tree : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        keyInputEvents.AddKeyEvent(() => Input.GetKeyDown(KeyCode.Space), GainExp);
+        keyInputEvents.AddKeyEvent(() => Input.GetKeyDown(KeyCode.Space), () => GainExp(1,false));
         keyInputEvents.AddKeyEvent(() => Input.GetMouseButtonDown(0), () => {
             GainExp();
             LevelUp();
@@ -127,6 +127,11 @@ public class Tree : MonoBehaviour
     public void SubtractLeafCount()
     {
         curLeafCount--;
+    }
+
+    public Vector2 GetExpSpawnSize()
+    {
+        return expSpwanRadius;
     }
 
     public void AddLeafChance(float value)
@@ -217,21 +222,27 @@ public class Tree : MonoBehaviour
         colorIndex++;
     }
 
-    private void GainExp()
+    public void GainExp(int count = 1,bool isAuto = false)
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        float x = UnityEngine.Random.Range(-expSpwanRadius.x, expSpwanRadius.x);
-        float y = UnityEngine.Random.Range(-expSpwanRadius.y, expSpwanRadius.y);
-        Vector2 spawnPos = new Vector2(x,y);
-        int chance = UnityEngine.Random.Range(0, 100);
-        if (chance <= doubleExpChance)
+        if(!isAuto)
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+        
+        for(int i = 0; i < count; i++)
         {
-            var exp = Instantiate(doubleExpObj, spawnPos, Quaternion.identity);
-        } 
-        else
-        {
-            var exp = Instantiate(expObj, spawnPos, Quaternion.identity);
+            float x = UnityEngine.Random.Range(-expSpwanRadius.x, expSpwanRadius.x);
+            float y = UnityEngine.Random.Range(-expSpwanRadius.y, expSpwanRadius.y);
+            Vector2 spawnPos = new Vector2(x, y);
+            int chance = UnityEngine.Random.Range(0, 100);
+            if (chance <= doubleExpChance)
+            {
+                var exp = Instantiate(doubleExpObj, spawnPos, Quaternion.identity);
+            }
+            else
+            {
+                var exp = Instantiate(expObj, spawnPos, Quaternion.identity);
+            }
         }
+        
     }
 
     private void EarnExp(int value)
