@@ -21,6 +21,7 @@ public class BuyAndSell : MonoBehaviour
     public int [] SellItemPrice = new int[3];
     public int [] SellItemLeaf = new int[3];
     public Text[] SellItems_Text = new Text[3];
+    public Text[] SellItemsMoney_Text = new Text[3];
     public GameObject[] SellChoice = new GameObject[3];
     public int SellItemNumber = 1; // SellItem을 한 번에 몇 개를 팔 것인가를 고를 수 있게 하는 변수
     public int ChosenNum;
@@ -28,6 +29,8 @@ public class BuyAndSell : MonoBehaviour
 
     public Text Money;
     public Text Leaf;
+
+    private Goods[] goodsArray = new Goods[3];
 
     private bool isOnBuyPanel = false;
 
@@ -41,12 +44,17 @@ public class BuyAndSell : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             BuyItemLevel[i] = 0;
+            SellItemsMoney_Text[i].text = SellItemPrice[i].ToString();
             SellItems_Text[i].text = "Leaf: " + SellItemLeaf[i].ToString();
             SellChoice[i].SetActive(false);
         }
 
         Buy_rectTransform = BuyBar.GetComponent<RectTransform>();
         Sell_rectTransform = SellBar.GetComponent<RectTransform>();
+
+        goodsArray[0] = new WateringCan(BuyItemPrice[0]);
+        goodsArray[1] = new Fertilizer(BuyItemPrice[1]);
+        goodsArray[2] = new CleanMachine(BuyItemPrice[2]);
     }
 
     void Update()
@@ -95,6 +103,7 @@ public class BuyAndSell : MonoBehaviour
             SellItemNumber++;
 
         SellItems_Text[ChosenNum].text = SellItemNumber.ToString();
+        SellItemsMoney_Text[ChosenNum].text = (SellItemPrice[ChosenNum] * SellItemNumber).ToString();
     }
     public void SellItemNumber_Minus()
         {
@@ -103,7 +112,8 @@ public class BuyAndSell : MonoBehaviour
             else
                 SellItemNumber--;
 
-            SellItems_Text[ChosenNum].text = SellItemNumber.ToString();          
+            SellItems_Text[ChosenNum].text = SellItemNumber.ToString();
+            SellItemsMoney_Text[ChosenNum].text = (SellItemPrice[ChosenNum] * SellItemNumber).ToString();      
         }
     public void SellItemNumber_Click()
     {
@@ -111,6 +121,7 @@ public class BuyAndSell : MonoBehaviour
         GameManager.Money += SellItemPrice[ChosenNum] * SellItemNumber;
         SellItemNumber = 1;
         SellItems_Text[ChosenNum].text = "Leaf: " + SellItemLeaf[ChosenNum].ToString();
+        SellItemsMoney_Text[ChosenNum].text = SellItemPrice[ChosenNum].ToString();
         SellChoice[ChosenNum].SetActive(false);
         OtherButtonActive = false;
     }
@@ -174,10 +185,10 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[0])
         {
             BuyItemLevel[0]++;
-            //Tree.Instance.increaseGrowth += 1;
-            GameManager.Money -= BuyItemPrice[0];
+            goodsArray[0].Buy(ref GameManager.Money);
             BuyItemPrice[0] *= 1.25f;
             BuyItemPrice[0] = (int)BuyItemPrice[0];
+            goodsArray[0].InitPrice(BuyItemPrice[0]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.
@@ -190,10 +201,11 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
         {
             BuyItemLevel[1]++;
-            //Tree.Instance.increaseGrowth = (int)(Tree.Instance.increaseGrowth * 1.2f);
-            GameManager.Money -= BuyItemPrice[1];
+            goodsArray[1].Buy(ref GameManager.Money);
+            //GameManager.Money -= BuyItemPrice[1];
             BuyItemPrice[1] *= 1.25f;
             BuyItemPrice[1]  = (int)BuyItemPrice[1];
+            goodsArray[1].InitPrice(BuyItemPrice[1]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.
@@ -209,9 +221,11 @@ public class BuyAndSell : MonoBehaviour
         if (GameManager.Money >= BuyItemPrice[2])
         {
             BuyItemLevel[2]++;
-            GameManager.Money -= BuyItemPrice[2];
+            goodsArray[2].Buy(ref GameManager.Money);
+            //GameManager.Money -= BuyItemPrice[2];
             BuyItemPrice[2] *= 1.25f;
             BuyItemPrice[2] = (int)BuyItemPrice[2];
+            goodsArray[2].InitPrice(BuyItemPrice[2]);
         }
         else
         { // 임시로 로그에만 표시해 놓았습니다.

@@ -50,7 +50,7 @@ public class Tree : MonoBehaviour
     public int increaseGrowth = 1;
     [SerializeField] private TreeState state;
     [SerializeField] private int growth = 0;
-    [SerializeField] private int fallLeafChance;
+    [SerializeField] private float fallLeafChance;
     [SerializeField] private int doubleExpChance;
     [SerializeField] private float leafDropDelay;
     [SerializeField] private int[] growthLevelLimits = new int[5];
@@ -129,6 +129,11 @@ public class Tree : MonoBehaviour
         curLeafCount--;
     }
 
+    public void AddLeafChance(float value)
+    {
+        fallLeafChance += value;
+    }
+
     private void DropLeaf()
     {
         if(curLeafDropTime >= leafDropDelay)
@@ -138,13 +143,29 @@ public class Tree : MonoBehaviour
             {
                 return;
             }
+            float chance = UnityEngine.Random.Range(0,100f);
+            int count = 0;
+            if(fallLeafChance >= chance)
+            {
+                count = 1;
+                if(fallLeafChance/2 >= chance)
+                {
+                    count = 2;
+                }
+            } else
+            {
+                return;
+            }
             float x, y;
-            x = UnityEngine.Random.Range(-transform.localScale.x, transform.localScale.x);
-            y = UnityEngine.Random.Range(-transform.localScale.y, transform.localScale.y);
-            var spawnPos = transform.position + new Vector3(x, y, 0);
-            var _leaf = Instantiate(leaf, spawnPos,Quaternion.identity);
-            curLeafCount++;
-            _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state /4));
+            for(int i = 0; i < count; i++)
+            {
+                x = UnityEngine.Random.Range(-transform.localScale.x, transform.localScale.x);
+                y = UnityEngine.Random.Range(-transform.localScale.y, transform.localScale.y);
+                var spawnPos = transform.position + new Vector3(x, y, 0);
+                var _leaf = Instantiate(leaf, spawnPos, Quaternion.identity);
+                curLeafCount++;
+                _leaf.transform.localScale = Vector3.one * 0.5f + Vector3.one * (((float)state / 4));
+            }
         }
     }
 

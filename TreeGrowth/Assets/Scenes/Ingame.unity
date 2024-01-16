@@ -2591,9 +2591,9 @@ MonoBehaviour:
   increaseGrowth: 1
   state: 0
   growth: 0
-  fallLeafChance: 0
+  fallLeafChance: 20
   doubleExpChance: 10
-  leafDropDelay: 1
+  leafDropDelay: 0.5
   growthLevelLimits: e803000010270000a086010040420f0080969800
   growthLevelScales:
   - 0
