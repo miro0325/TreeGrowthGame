@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
     public static float Money = 0;
     public static int Leaf = 1000;
 
+    public WeatherType weatherType = WeatherType.None;
+
     public List<Leaf> leafList = new List<Leaf>();
 
     [SerializeField] private Camera cam;
     [SerializeField] private int month = 1;
     [SerializeField] private int year = 2077;
     [SerializeField] private float time;
+    [SerializeField] private Transform stormPoint;
     private Vector3 mousePosition;
 
     private SeasonBase curSeason;
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         curSeason.Passive();
+        
         UpdateTime();
         
     }
@@ -81,13 +85,20 @@ public class GameManager : MonoBehaviour
         {
             curSeason = seasons[3];
         }
+
+        if(weatherType != WeatherType.None) weatherType = WeatherType.None;
+
+        curSeason.SeasonEvent();
     }
-
-
 
     public Vector3 GetMousePos()
     {
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         return mousePosition;
+    }
+
+    public Vector3 GetStormPos()
+    {
+        return stormPoint.position;
     }
 }

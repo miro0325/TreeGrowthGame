@@ -24,4 +24,9 @@ public class Winter : SeasonBase
     {
 
     }
+
+    public override void SeasonEvent()
+    {
+        
+    }
 }

@@ -28,4 +28,9 @@ public class Fall : SeasonBase
 
     }
 
+    public override void SeasonEvent()
+    {
+        
+    }
+
 }

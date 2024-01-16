@@ -5,8 +5,7 @@ using UnityEngine;
 public class Summer : SeasonBase
 {
     private float chance;
-    private float multiply;
-    
+    private float multiply;    
     public Summer(float _chance, float _multiply) : base()    
     {
         chance = _chance;
@@ -26,4 +25,14 @@ public class Summer : SeasonBase
         
     }
 
+    public override void SeasonEvent()
+    {
+        int ran;
+        ran = Random.Range(0, 9);
+        if(ran == 0)
+        {
+            GameManager.Instance.weatherType = WeatherType.Storm;
+
+        }
+    }
 }

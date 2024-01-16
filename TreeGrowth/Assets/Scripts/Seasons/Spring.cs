@@ -31,5 +31,9 @@ public class Spring : SeasonBase
         }
     }
 
+    public override void SeasonEvent()
+    {
+        
+    }
     
 }

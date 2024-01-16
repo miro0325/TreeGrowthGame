@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeatherType {
+    None,
+    Storm,
+
+}
+
 public enum SeasonType
 {
     Spring = 0,
@@ -26,4 +32,6 @@ public abstract class SeasonBase
     public abstract void Init();
 
     public abstract void Passive();
+
+    public abstract void SeasonEvent();
 }

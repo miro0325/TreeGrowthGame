@@ -128,7 +128,29 @@ public class Leaf : MonoBehaviour
         }
     }
 
+    private void Storm()
+    {
+        startPos = transform.position;
+        endPos = GameManager.Instance.GetStormPos();
 
+        rigid.gravityScale = 0;
+        var dist = Vector2.Distance(startPos, endPos);
+        time += Time.deltaTime * speed * (0.5f / dist);
+        var pos = Vector3.MoveTowards(startPos, endPos, time);
+        pos.z = 0;
+        transform.position = pos;
+        if(dist < 0.5f)
+        {
+            isEarn = true;
+            isEarning = true;
+            GameManager.Instance.leafList.Remove(this);
+            transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
+            {
+                Tree.Instance.SubtractLeafCount();
+                Destroy(this.gameObject);
+            });
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -150,5 +172,6 @@ public class Leaf : MonoBehaviour
                 EarnLeaf();
             }
         }
+        if(GameManager.Instance.weatherType == WeatherType.Storm) Storm();
     }
 }
