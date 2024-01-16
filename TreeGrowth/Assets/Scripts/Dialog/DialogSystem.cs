@@ -150,21 +150,5 @@ public class DialogSystem : MonoBehaviour
             if (!isTypingEnd) EndTyping();
             else Typing(dialogText[dialogNumber], tempText);
         }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Skip();
-        }
-    }
-
-    public void Skip()
-    {
-        isDialogEnd = true;
-        isTypingEnd = true;
-    }
-
-    public void OnClickSkipButton()
-    {
-        Skip();
     }
 }
