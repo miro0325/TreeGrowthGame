@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b8fe820be2ff00488807a08010259a9
+guid: 7310a4a26a5e10d4b9d1010b8dac4b7d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,60 +115,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: 0__0
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 3
-        width: 35
-        height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -6.4595966, y: 20.5}
-        - {x: -12.945362, y: 14.957302}
-        - {x: -17.426537, y: 9.979946}
-        - {x: -17.5, y: -19.5}
-        - {x: -11.5, y: -20.5}
-        - {x: 17.5, y: -20.5}
-        - {x: 17.5, y: 20.5}
-      - - {x: -13.385298, y: 15.226677}
-        - {x: -13.385298, y: 15.520523}
-        - {x: -12.797602, y: 15.520523}
-        - {x: -12.797602, y: 15.226677}
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a18302c0dec90c84ab666fb8a3d78e11
-      internalID: -1288576177
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 0__1
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 23
-        width: 35
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 066ed4d6f77bdee4885f5d070c17067c
-      internalID: 593125919
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -179,9 +126,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      0__0: -1288576177
-      0__1: 593125919
+    nameFileIdTable: {}
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

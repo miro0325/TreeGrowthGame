@@ -13,8 +13,8 @@ public class Fall : SeasonBase
     {
         count = _count;
         multiply = _multiply;
-        Tree.Instance.SetExtraLeafCount(count);
-        Tree.Instance.SetExpMultiplier(multiply);
+        //Tree.Instance.SetExtraLeafCount(count);
+        //Tree.Instance.SetExpMultiplier(multiply);
     }
     
     public override void Init()
