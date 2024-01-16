@@ -44,7 +44,7 @@ public class Leaf : MonoBehaviour
 
     private void InitMousePos()
     {
-        if(target != null)
+        if(target != null || isEarn)
         {
             return;
         }
@@ -141,7 +141,6 @@ public class Leaf : MonoBehaviour
         transform.position = pos;
         if(dist < 0.5f)
         {
-            isEarn = true;
             isEarning = true;
             GameManager.Instance.leafList.Remove(this);
             transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
@@ -156,7 +155,7 @@ public class Leaf : MonoBehaviour
     void Update()
     {
         KeyInput(); 
-        if(target != null)
+        if(target != null && isEarn == false)
         {
             startPos = transform.position;
             endPos = target.position;
@@ -172,6 +171,17 @@ public class Leaf : MonoBehaviour
                 EarnLeaf();
             }
         }
-        if(GameManager.Instance.weatherType == WeatherType.Storm) Storm();
+        if(GameManager.Instance.weatherType == WeatherType.Storm && isEarn == false) Storm();
+        if(transform.position.y < -10) 
+        {
+            isEarn = true;
+            isEarning = true;
+            GameManager.Instance.leafList.Remove(this);
+            transform.DOScale(Vector2.zero, 0.3f).OnComplete(() =>
+            {
+                Tree.Instance.SubtractLeafCount();
+                Destroy(this.gameObject);
+            });
+        }
     }
 }

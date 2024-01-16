@@ -7184,6 +7184,37 @@ MonoBehaviour:
   - {x: -1.7671043, y: -0.46394822, z: 0}
   - {x: -1.7655935, y: -0.38203627, z: 0}
   - {x: -1.9048517, y: -0.38073668, z: 0}
+--- !u!1 &892196502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 892196503}
+  m_Layer: 0
+  m_Name: StormPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &892196503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892196502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15, y: -2, z: -0.0070219636}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &969643545
 GameObject:
   m_ObjectHideFlags: 0
@@ -8612,11 +8643,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e6a0e15e0e32c44a394db5e8366562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weatherType: 0
+  leafList: []
   seasonType: 0
   cam: {fileID: 519420031}
   month: 1
   year: 2077
   time: 3
+  stormPoint: {fileID: 892196503}
   date: {fileID: 686813466}
 --- !u!4 &1256656343
 Transform:
