@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class DialogSystem : MonoBehaviour
 {
+
     public static DialogSystem Instance { get; set; }
 
     [SerializeField]
@@ -131,6 +132,7 @@ public class DialogSystem : MonoBehaviour
 
     void Start()
     {
+        AudioManager.instance.PlayMusic("IntroSound");
         if (Instance == null) Instance = this;
         else Destroy(this);
 
