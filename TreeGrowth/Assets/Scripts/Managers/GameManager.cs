@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform stormPoint;
 	[SerializeField] private Text date;
     [SerializeField] private ParticleSystem[] weatherEffects;
+    [SerializeField] private ParticleSystem StormEffects;
     [SerializeField] private SpriteRenderer ground;
     [SerializeField] private MaidBot maidBot;
     private Vector3 mousePosition;
@@ -112,10 +113,11 @@ public class GameManager : MonoBehaviour
     private void ChangeSeason()
     {
         var par = weatherEffects[(int)seasonType];
+        var parStorm = StormEffects;
         //var setting = par.main;
         //setting.loop = false;
         par.Stop();
-        StartCoroutine(ParticleSmoothDisable(par.gameObject));
+        StartCoroutine(ParticleSmoothDisable(par.gameObject, 1));
         if(month >= 12 || month < 3)
         {
             curSeason = seasons[3];
@@ -137,10 +139,20 @@ public class GameManager : MonoBehaviour
             seasonType = SeasonType.Fall;
         }
 
-        if(weatherType != WeatherType.None) weatherType = WeatherType.None;
+        if(weatherType != WeatherType.None) 
+        {
+            weatherType = WeatherType.None;
+            parStorm.Stop();
+            StartCoroutine(ParticleSmoothDisable(parStorm.gameObject, 3));
+        }
 
         curSeason.Init();
         curSeason.SeasonEvent();
+        if(weatherType == WeatherType.Storm) 
+        {
+            parStorm.gameObject.SetActive(true);
+            parStorm.Play();
+        }
         par = weatherEffects[(int)seasonType];
         par.gameObject.SetActive(true);
         //setting = par.main;
@@ -148,9 +160,9 @@ public class GameManager : MonoBehaviour
         par.Play();
     }
 
-    private IEnumerator ParticleSmoothDisable(GameObject obj)
+    private IEnumerator ParticleSmoothDisable(GameObject obj, int second)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(second);
         obj.SetActive(false);
     }
 

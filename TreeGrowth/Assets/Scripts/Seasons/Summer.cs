@@ -33,6 +33,7 @@ public class Summer : SeasonBase
         if(ran == 0)
         {
             GameManager.Instance.weatherType = WeatherType.Storm;
+            GameManager.Leaf /= 2;
         }
     }
 }
