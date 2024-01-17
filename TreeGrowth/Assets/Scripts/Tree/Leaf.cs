@@ -14,7 +14,7 @@ public class Leaf : MonoBehaviour
     private Vector3 startPos,endPos;
     private Rigidbody2D rigid;
     private bool isEarn = false;
-    private bool isEarnStorm = false;
+    [SerializeField] private bool isEarnStorm = false;
     private Transform target;
 
     private bool isEarning = false;
@@ -46,26 +46,31 @@ public class Leaf : MonoBehaviour
 
     private void InitMousePos()
     {
-        if(target != null || isEarn || isEarnStorm)
+        
+        if(!isEarnStorm)
         {
-            return;
-        }
-        startPos = transform.position;
-        endPos = GameManager.Instance.GetMousePos();
-        var dist = Vector2.Distance(startPos, endPos);
+            if(target != null || isEarn)
+            {
+                return;
+            }
+            startPos = transform.position;
+            endPos = GameManager.Instance.GetMousePos();
+            var dist = Vector2.Distance(startPos, endPos);
        
-        if (dist > distance || isEarn || isEarnStorm)
-        {
-            return;
+            if (dist > distance || isEarn)
+            {
+                return;
+            }
+            rigid.gravityScale = 0;
+            time = 0;
+            startPos = transform.position;
+            endPos = GameManager.Instance.GetMousePos();
         }
-        rigid.gravityScale = 0;
-        time = 0;
-        startPos = transform.position;
-        endPos = GameManager.Instance.GetMousePos();
     }
 
     private void ResetLeaf()
     {
+        if(isEarnStorm) return; 
         if (target != null)
         {
             return;
@@ -76,28 +81,31 @@ public class Leaf : MonoBehaviour
 
     private void GetLeaf()
     {
-        if (target != null)
+        if(!isEarnStorm)
         {
-            return;
-        }
-        startPos = transform.position;
-        endPos = GameManager.Instance.GetMousePos();
-        var dist = Vector2.Distance(startPos, endPos);
-        
-        if (dist > distance || isEarn || isEarnStorm)
-        {
-            ResetLeaf();
-            return;
-        }
-        rigid.gravityScale = 0;
-        time += Time.deltaTime * speed * (0.5f/dist);
-        var pos = Vector3.MoveTowards(startPos, endPos, time);
-        pos.z = 0;
-        transform.position = pos;
-        if (dist < 0.5f)
-        {
-            isEarn = true;
-            EarnLeaf();
+            if (target != null)
+            {
+                return;
+            }
+            startPos = transform.position;
+            endPos = GameManager.Instance.GetMousePos();
+            var dist = Vector2.Distance(startPos, endPos);
+
+            if (dist > distance || isEarn)
+            {
+                ResetLeaf();
+                return;
+            }
+            rigid.gravityScale = 0;
+            time += Time.deltaTime * speed * (0.5f/dist);
+                var pos = Vector3.MoveTowards(startPos, endPos, time);
+            pos.z = 0;
+            transform.position = pos;
+            if (dist < 0.5f)
+            {
+                isEarn = true;
+                EarnLeaf();
+            }
         }
     }
     
@@ -173,6 +181,7 @@ public class Leaf : MonoBehaviour
                 EarnLeaf();
             }
         }
+        
         if(GameManager.Instance.weatherType == WeatherType.Storm && isEarn == false) isEarnStorm = true;
         if(isEarnStorm) Storm();
         if(transform.position.y < -10) 
