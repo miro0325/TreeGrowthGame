@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
         if(weatherType != WeatherType.None) 
         {
             weatherType = WeatherType.None;
+            Leaf /= 2;
             parStorm.Stop();
             StartCoroutine(ParticleSmoothDisable(parStorm.gameObject, 3));
         }
