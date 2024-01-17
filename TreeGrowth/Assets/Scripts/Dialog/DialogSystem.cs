@@ -150,9 +150,9 @@ public class DialogSystem : MonoBehaviour
             {
                 if (!isEnding)
                 {
-                    ChangeScene();
+                    fade.Fade(false);
+                    Invoke(nameof(ChangeScene), 1);
 
-                    SceneManager.LoadScene("TutorialScene");
                 }
                 return;
             }
@@ -163,7 +163,6 @@ public class DialogSystem : MonoBehaviour
 
     public void ChangeScene()
     {
-        fade.Fade(true);
-        Invoke("FadeIn", 1);
+        SceneManager.LoadScene("TutorialScene");
     }
 }
