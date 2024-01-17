@@ -108,13 +108,18 @@ public class MaidBot : MonoBehaviour
 
     private void Flip()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.left * flipX,distance,LayerMask.GetMask("Wall"));
-        Debug.DrawRay(transform.position, Vector2.left * flipX, Color.green,distance);
-        if(hit.collider != null)
-        {
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.left * flipX,distance,LayerMask.GetMask("Wall"));
+        // Debug.DrawRay(transform.position, Vector2.left * flipX, Color.green,distance);
+        // if(hit.collider != null)
+        // {
             
-            //Debug.Log(hit.collider.gameObject.name);
+        //     //Debug.Log(hit.collider.gameObject.name);
+        //     flipX *= -1;
+        // }
+        if(transform.position.x >= 9) {
             flipX *= -1;
+        } else if(transform.position.x <= -9) {
+            flipX *= -1;    
         }
     }
 
