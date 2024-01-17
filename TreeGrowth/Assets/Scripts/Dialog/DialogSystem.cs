@@ -4,7 +4,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static GameManager;
 using UnityEngine.UI;
+using System.Xml;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -26,6 +28,7 @@ public class DialogSystem : MonoBehaviour
 
     [SerializeField] string[] dialogText;
 
+
     [SerializeField] float charTime;
 
     [SerializeField] float timer;
@@ -39,8 +42,9 @@ public class DialogSystem : MonoBehaviour
 
     [SerializeField] int dialogNumber = 0;
 
-    Coroutine coroutine = null;
+    [SerializeField] TMP_Text EndingDate;
 
+    Coroutine coroutine = null;
     public bool IsTypingEnd()
     {
         return isTypingEnd;
@@ -132,7 +136,8 @@ public class DialogSystem : MonoBehaviour
 
     void Start()
     {
-        AudioManager.instance.PlayMusic("IntroSound");
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlayMusic("IntroSound");
         if (Instance == null) Instance = this;
         else Destroy(this);
 
@@ -152,8 +157,12 @@ public class DialogSystem : MonoBehaviour
             {
                 if (!isEnding)
                 {
-                    fade.Fade(false);
-                    Invoke(nameof(ChangeScene), 1);
+                    SceneManager.LoadScene("TutorialScene");
+
+                }
+                if (isEnding)
+                {
+                    SceneManager.LoadScene("Title");
 
                 }
                 return;

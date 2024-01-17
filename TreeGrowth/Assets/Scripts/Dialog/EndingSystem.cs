@@ -18,7 +18,7 @@ public class EndingSystem : MonoBehaviour
     }
     void CheckEndingCondition()
     {
-        if (tree != null && tree.Growth >= 100000000)
+        if (tree != null && tree)
         {
             SceneManager.LoadScene("EndingScene");
         }
