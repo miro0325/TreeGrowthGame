@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] FadeScript fade;
 
     public static float Money = 0;
     public static int Leaf = 1000;
@@ -91,6 +93,20 @@ public class GameManager : MonoBehaviour
             date.text = $"Date : {year} - 0{month}";
         else
             date.text = $"Date : {year} - {month}";
+
+        if(year == 2097)
+        {
+            fade.Fade(false);
+            Invoke(nameof(ChangeScene), 1);
+        }
+    }
+
+    public void ChangeScene()
+    {
+        if ((int)Tree.Instance.State <= 2 ) SceneManager.LoadScene("Ending 2");
+        else if ((int)Tree.Instance.State <= 4) SceneManager.LoadScene("Ending 1");
+        else SceneManager.LoadScene("Ending");
+
     }
 
     private void ChangeSeason()

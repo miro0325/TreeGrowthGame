@@ -4,7 +4,9 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static GameManager;
 using UnityEngine.UI;
+using System.Xml;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class DialogSystem : MonoBehaviour
 
     [SerializeField] string[] dialogText;
 
+
     [SerializeField] float charTime;
 
     [SerializeField] float timer;
@@ -38,8 +41,9 @@ public class DialogSystem : MonoBehaviour
 
     [SerializeField] int dialogNumber = 0;
 
-    Coroutine coroutine = null;
+    [SerializeField] TMP_Text EndingDate;
 
+    Coroutine coroutine = null;
     public bool IsTypingEnd()
     {
         return isTypingEnd;
