@@ -40,7 +40,7 @@ public class StoreInOut : MonoBehaviour
         //상점 임시 단축키 S
         if(Input.GetKeyDown(KeyCode.S))
         {
-            if(inStore == false)
+            if (inStore == false)
             {
                 InStore();
             }
@@ -63,11 +63,13 @@ public class StoreInOut : MonoBehaviour
 
     public void InStore()
     {
+        AudioManager.instance.PlaySFX("BtSound");
         inStore = true;
     }
 
     public void OutStore()
     {
+        AudioManager.instance.PlaySFX("BtSound");
         inStore = false;
     }
 }
