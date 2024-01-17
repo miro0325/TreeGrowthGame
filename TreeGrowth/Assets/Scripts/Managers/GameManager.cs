@@ -95,9 +95,8 @@ public class GameManager : MonoBehaviour
         else
             date.text = $"Date : {year} - {month}";
 
-        if(year == 2097)
+        if(year >= 2097)
         {
-            fade.Fade(false);
             Invoke(nameof(ChangeScene), 1);
         }
     }

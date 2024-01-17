@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/minjun/Ending.unity
     guid: bc6808ec1f8941f4b9cd2722aeb1aa87
   - enabled: 1
+    path: Assets/Scenes/minjun/Ending 1.unity
+    guid: cf3a0d0ec7b7a2945ace8dbd3c1bd4ca
+  - enabled: 1
+    path: Assets/Scenes/minjun/Ending 2.unity
+    guid: 1f01f3977e9ac3f469b812312bb0d485
+  - enabled: 1
     path: Assets/Scenes/minjun/TutorialScene.unity
     guid: f2d39c78a1cc0484a843e282c77562c9
   m_configObjects: {}

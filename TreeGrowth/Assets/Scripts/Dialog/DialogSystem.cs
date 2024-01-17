@@ -136,7 +136,8 @@ public class DialogSystem : MonoBehaviour
 
     void Start()
     {
-        AudioManager.instance.PlayMusic("IntroSound");
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlayMusic("IntroSound");
         if (Instance == null) Instance = this;
         else Destroy(this);
 
@@ -156,8 +157,12 @@ public class DialogSystem : MonoBehaviour
             {
                 if (!isEnding)
                 {
-                    fade.Fade(false);
-                    Invoke(nameof(ChangeScene), 1);
+                    SceneManager.LoadScene("TutorialScene");
+
+                }
+                if (isEnding)
+                {
+                    SceneManager.LoadScene("Title");
 
                 }
                 return;
