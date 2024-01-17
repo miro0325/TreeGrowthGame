@@ -13,9 +13,14 @@ public class TouchScene : MonoBehaviour
     }
     public void InGame()
     {
-        SceneManager.LoadScene("Ingame");
+        SceneManager.LoadScene("TutorialScene");
     }
-    public void ChangeScene()
+    public void ChangeTutorialScene()
+    {
+        fade.Fade(false);
+        Invoke("InGame", 1);
+    }
+    public void ChangeIntroScene()
     {
         fade.Fade(false);
         Invoke("FadeIn", 1);
