@@ -88,11 +88,13 @@ public class BuyAndSell : MonoBehaviour
     public void Click_Buy()
     {
         Sell_rectTransform.SetAsFirstSibling();
+        AudioManager.instance.PlaySFX("BtSound");
     }
 
     public void Click_Sell()
     {   
         Buy_rectTransform.SetAsFirstSibling();
+        AudioManager.instance.PlaySFX("BtSound");
     }
 
     public void SellItemNumber_Plus()
@@ -117,6 +119,7 @@ public class BuyAndSell : MonoBehaviour
         }
     public void SellItemNumber_Click()
     {
+        AudioManager.instance.PlaySFX("SellBuy");
         GameManager.Leaf -= SellItemLeaf[ChosenNum] * SellItemNumber;
         GameManager.Money += SellItemPrice[ChosenNum] * SellItemNumber;
         SellItemNumber = 1;
@@ -182,6 +185,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_0()
     {
+        AudioManager.instance.PlaySFX("SellBuy");
         if (GameManager.Money >= BuyItemPrice[0])
         {
             BuyItemLevel[0]++;
@@ -198,6 +202,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_1()
     {
+        AudioManager.instance.PlaySFX("SellBuy");
         if (GameManager.Money >= BuyItemPrice[1] && BuyItemLevel[1] < 900)
         {
             BuyItemLevel[1]++;
@@ -218,6 +223,7 @@ public class BuyAndSell : MonoBehaviour
 
     public void Buy_2()
     {
+        AudioManager.instance.PlaySFX("SellBuy");
         if (GameManager.Money >= BuyItemPrice[2])
         {
             BuyItemLevel[2]++;

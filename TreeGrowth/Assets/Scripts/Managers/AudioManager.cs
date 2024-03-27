@@ -1,43 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;                                   //UI »ç¿ëÀ» À§ÇØ
-using UnityEngine.Audio;                                //¿Àµð¿À »ç¿ëÀ» À§ÇØ
+using UnityEngine.UI;                                   //UI ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+using UnityEngine.Audio;                                //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 using System;
-using UnityEngine.Rendering;                                           //¹è¿­ÀÇ ¶÷´Ù½Ä »ç¿ëÀ» À§ÇØ¼­ 
+using UnityEngine.Rendering;                                           //ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ 
 
 [Serializable]
-public class Sound                                      //»ç¿îµå Å¬¸³°ú ÀÌ¸§À» °ü¸®ÇÏ±â À§ÇØ »ç¿ë
+public class Sound                                      //ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 {
-    public string name;                                 //ÀÌ¸§À» Áö¾îÁØ´Ù.
-    public AudioClip clip;                              //¿Àµð¿À Å¬¸³
+    public string name;                                 //ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+    public AudioClip clip;                              //ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½
 }
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance { get; private set; }         //static »ç¿ëÇÏ¿© ½Ì±ÛÅæ µî·Ï
+    public static AudioManager instance { get; private set; }         //static ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-    //¿Àµð¿À Clip ¹è¿­ 
-    public Sound[] musicSounds;                         //»ç¿ëÇÒ »ç¿îµå ¼±¾ð
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ Clip ï¿½è¿­ 
+    public Sound[] musicSounds;                         //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Sound[] sfxSound;
 
-    public AudioSource musicSource;                     //»ç¿ëÇÒ ¿Àµð¿À ¼Ò½º ¼±¾ð
+    public AudioSource musicSource;                     //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public AudioSource sfxSource;
 
-    //¿Àµð¿À ¿É¼Ç
-    public AudioMixer mixer;                            //»ç¿ëÇÒ ¿Àµð¿À ¹Í¼­
-    public Slider musicSlider;                          //¿É¼ÇÃ¢¿¡¼­ »ç¿ëÇÒ MusicSlider
-    public Slider sfxSlider;                            //¿É¼ÇÃ¢¿¡¼­ »ç¿ëÇÒ SFXSlider
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½
+    public AudioMixer mixer;                            //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½
+    public Slider musicSlider;                          //ï¿½É¼ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ MusicSlider
+    public Slider sfxSlider;                            //ï¿½É¼ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ SFXSlider
 
-    const string MIXER_MUSIC = "MusicVolume";           //»ç¿ëÇÒ Param °ª (Music)
-    const string MIXER_SFX = "SFXVolume";               //»ç¿ëÇÒ Param °ª (SFX)
+    const string MIXER_MUSIC = "MusicVolume";           //ï¿½ï¿½ï¿½ï¿½ï¿½ Param ï¿½ï¿½ (Music)
+    const string MIXER_SFX = "SFXVolume";               //ï¿½ï¿½ï¿½ï¿½ï¿½ Param ï¿½ï¿½ (SFX)
 
-    //¿Àµð¿À ÆÐ³Î ¼³Á¤
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½
     public GameObject AudioPanel;
-    public bool AudioPanelFlag = false;                 //Æä³ÎÀÌ OnOff µÇ¾îÀÖ´ÂÁö ¿©ºÎ¸¦ °Ë»ç
+    public bool AudioPanelFlag = false;                 //ï¿½ï¿½ï¿½ï¿½ï¿½ OnOff ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½Ë»ï¿½
 
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, true);
+
         if (instance == null)
         {
             instance = this;
@@ -48,52 +50,52 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        musicSlider.value = 1.0f;                                   //½ÃÀÛ½Ã 1·Î ¼³Á¤
-        sfxSlider.value = 1.0f;                                     //½ÃÀÛ½Ã 1·Î ¼³Á¤
+        musicSlider.value = 1.0f;                                   //ï¿½ï¿½ï¿½Û½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        sfxSlider.value = 1.0f;                                     //ï¿½ï¿½ï¿½Û½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        musicSlider.onValueChanged.AddListener(SetMusicVolume);     //½½¶óÀÌ´õÀÇ °ªÀÌ º¯°æ µÇ¾úÀ»¶§ ÇØ´ç ÇÔ¼ö¸¦ È£Ãâ ÇÑ´Ù. 
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);     //½½¶óÀÌ´õÀÇ °ªÀÌ º¯°æ µÇ¾úÀ»¶§ ÇØ´ç ÇÔ¼ö¸¦ È£Ãâ ÇÑ´Ù. 
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);     //ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½Ñ´ï¿½. 
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);     //ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ ï¿½Ñ´ï¿½. 
     }
     void SetMusicVolume(float value)
     {
-        mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);       //Log10°ªÀ¸·Î 0 ~ 80 °ª º¼·ýÀ» ¼³Á¤ÇÒ¼ö ÀÖ°Ô ÇØÁØ´Ù.    
+        mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);       //Log10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ~ 80 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½.    
     }
     void SetSFXVolume(float value)
     {
-        mixer.SetFloat(MIXER_SFX, Mathf.Log10(value) * 20);       //Log10°ªÀ¸·Î 0 ~ 80 °ª º¼·ýÀ» ¼³Á¤ÇÒ¼ö ÀÖ°Ô ÇØÁØ´Ù. 
+        mixer.SetFloat(MIXER_SFX, Mathf.Log10(value) * 20);       //Log10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ~ 80 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½. 
     }
 
-    public void PlayMusic(string name)                      //Àç»ýÇÒ BGM ÇÔ¼ö »ý¼º 
+    public void PlayMusic(string name)                      //ï¿½ï¿½ï¿½ï¿½ï¿½ BGM ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ 
     {
-        Sound sound = Array.Find(musicSounds, x => x.name == name);     //Array ¶÷´Ù½Ä nameÀ» Ã£¾Æ¼­ ¹ÝÈ¯
+        Sound sound = Array.Find(musicSounds, x => x.name == name);     //Array ï¿½ï¿½ï¿½Ù½ï¿½ nameï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½È¯
 
-        if (sound == null)                           //nameÀ¸·ÎµÈ wav°¡ ¾øÀ» °æ¿ì Log Ãâ·Â
+        if (sound == null)                           //nameï¿½ï¿½ï¿½Îµï¿½ wavï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Log ï¿½ï¿½ï¿½
         {
             Debug.Log("Sound Not Found");
         }
         else
         {
-            musicSource.clip = sound.clip;              //»ý¼ºÇÑ ¿Àµð¿À ¼Ò½º¿¡ CLIPÀ» ³Ö´Â´Ù.    
-            musicSource.Play();                         //ÀÏ¹Ý Play Àç»ý
+            musicSource.clip = sound.clip;              //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½ï¿½ï¿½ CLIPï¿½ï¿½ ï¿½Ö´Â´ï¿½.    
+            musicSource.Play();                         //ï¿½Ï¹ï¿½ Play ï¿½ï¿½ï¿½
         }
     }
     public void PlaySFX(string name)
     {
-        Sound sound = Array.Find(sfxSound, x => x.name == name);     //Array ¶÷´Ù½Ä nameÀ» Ã£¾Æ¼­ ¹ÝÈ¯
+        Sound sound = Array.Find(sfxSound, x => x.name == name);     //Array ï¿½ï¿½ï¿½Ù½ï¿½ nameï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½È¯
 
-        if (sound == null)                           //nameÀ¸·ÎµÈ wav°¡ ¾øÀ» °æ¿ì Log Ãâ·Â
+        if (sound == null)                           //nameï¿½ï¿½ï¿½Îµï¿½ wavï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Log ï¿½ï¿½ï¿½
         {
             Debug.Log("Sound Not Found");
         }
         else
         {
-            sfxSource.PlayOneShot(sound.clip);                         //ÀÏ¹Ý Play Àç»ý
+            sfxSource.PlayOneShot(sound.clip);                         //ï¿½Ï¹ï¿½ Play ï¿½ï¿½ï¿½
         }
     }
 
-    public void PanelOnOff(bool type)                                   //¿Àµð¿À ¿É¼Ç ÆÐ³Î
+    public void PanelOnOff(bool type)                                   //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ ï¿½Ð³ï¿½
     {
-        AudioPanelFlag = type;                                          //µé¾î¿Â Å¸ÀÔ°ú µ¿±âÈ­
-        AudioPanel.SetActive(type);                                     //ÆÐ³ÎÀ» Å°°í ²ö´Ù. 
+        AudioPanelFlag = type;                                          //ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô°ï¿½ ï¿½ï¿½ï¿½ï¿½È­
+        AudioPanel.SetActive(type);                                     //ï¿½Ð³ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
     }
 }

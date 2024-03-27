@@ -17,6 +17,7 @@ public class TouchScene : MonoBehaviour
     }
     public void ChangeTutorialScene()
     {
+        AudioManager.instance.PlaySFX("BtSound");
         fade.Fade(false);
         Invoke("InGame", 1);
     }

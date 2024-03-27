@@ -52,7 +52,7 @@ public class TutorialManager : MonoBehaviour
         if (currentStep < tutorialPanels.Length)
         {
             tutorialPanels[currentStep].SetActive(false);
-
+            AudioManager.instance.PlaySFX("BtSound");
             currentStep++;
 
             ShowCurrentStep();

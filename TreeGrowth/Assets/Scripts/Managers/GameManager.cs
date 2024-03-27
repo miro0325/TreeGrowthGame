@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] FadeScript fade;
 
     public static float Money = 0;
-    public static int Leaf = 1000;
+    public static int Leaf = 0;
 
     public WeatherType weatherType = WeatherType.None;
 
@@ -111,7 +111,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateTime();   
+        curSeason.Passive();
+        if(Leaf < 0) Leaf = 0;
+        UpdateTime();
+        
     }
 
     void UpdateTime()

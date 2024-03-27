@@ -7,31 +7,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 
-//Ű �Է� �̺�Ʈ Ŭ����
-public class TutorialKeyInputEvents
-{
-    private Dictionary<Func<bool>, Action> keyEvents = new();
 
-    public void AddKeyEvent(Func<bool> key, System.Action value)
-    {
-        keyEvents.Add(key, value);
-    }
-
-    public void RemoveKeyEvent(Func<bool> key)
-    {
-        keyEvents.Remove(key);
-    }
-
-    public System.Action GetKeyEvent(Func<bool> key)
-    {
-        return keyEvents[key];
-    }
-
-    public Dictionary<Func<bool>, System.Action> GetKeyEvents()
-    {
-        return keyEvents;
-    }
-}
 
 public enum TutorialTreeState
 {
@@ -294,14 +270,9 @@ public class TutorialTree : MonoBehaviour
 
     private void EarnExp(int value)
     {
-        if ((growth + Mathf.RoundToInt(value * expMultiply)) > growthLevelLimits[(int)state])
-        {
-            growth = growthLevelLimits[(int)state];
-            if (IsLevelUp() && !isShowLevelUpEffect) ShowLevelUp();
-            return;
-        }
-        growth += Mathf.RoundToInt(value * expMultiply);
-        if (IsLevelUp() && !isShowLevelUpEffect) ShowLevelUp();
+        
+        if (!isShowLevelUpEffect) ShowLevelUp();
+        
     }
 
     //private void UpdateGrowth()
