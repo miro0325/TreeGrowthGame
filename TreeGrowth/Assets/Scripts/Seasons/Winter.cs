@@ -2,7 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Winter : SeasonBase
+public struct WinterInfo
+{
+    public float multiply;
+    public int count;
+    public SpriteRenderer renderer;
+}
+
+public class Winter : ISeasonBase
 {
     private float multiply;
     private int count;
@@ -10,24 +17,20 @@ public class Winter : SeasonBase
     private float curSnow = 0;
     private SpriteRenderer spriteRenderer;
 
-    public Winter( int _count,float _multiply, SpriteRenderer renderer) : base() {
-        multiply = _multiply;
-        count = _count;
-        spriteRenderer = renderer;
-        //Tree.Instance.SetExtraLeafCount(count);
-        //Tree.Instance.SetExpMultiplier(multiply);
-    }
-    
-    public override void Init()
+    public void Init(object obj)
     {
+        WinterInfo winterInfo = (WinterInfo)obj;
+        multiply = winterInfo.multiply;
+        count = winterInfo.count;
+        spriteRenderer = winterInfo.renderer;
+        
         Tree.Instance.SetExtraLeafCount(count);
         Tree.Instance.SetExpMultiplier(multiply);
-        //Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExtraLeafChance(0);
         curSnow = spriteRenderer.material.GetFloat("_SnowAmount");
     }
 
-    public override void Passive()
+    public void Passive()
     {
         var mat = spriteRenderer.material;
         curSnow -= Time.deltaTime * 0.1f;
@@ -42,8 +45,13 @@ public class Winter : SeasonBase
         }
     }
 
-    public override void SeasonEvent()
+    public void SeasonEvent()
     {
         
+    }
+
+    public void Reset()
+    {
+        curSnow = spriteRenderer.material.GetFloat("_SnowAmount");
     }
 }

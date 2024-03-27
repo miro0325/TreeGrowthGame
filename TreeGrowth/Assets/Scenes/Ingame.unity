@@ -23541,6 +23541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e6a0e15e0e32c44a394db5e8366562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fade: {fileID: 0}
   weatherType: 0
   leafList: []
   seasonType: 0

@@ -10,6 +10,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public SeasonType CurrentSeason
+    {
+        get
+        {
+            return seasonType;
+        } 
+        set
+        {
+            seasonType = value;
+            if((int)value > (int)SeasonType.Winter)
+            {
+                seasonType = SeasonType.Spring;
+            }
+        }
+    }
+
     [SerializeField] FadeScript fade;
 
     public static float Money = 0;
@@ -31,10 +47,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MaidBot maidBot;
     private Vector3 mousePosition;
 
-    private SeasonBase curSeason;
-    private SeasonBase[] seasons = new SeasonBase[4];
+    private ISeasonBase curSeason;
+    private ISeasonBase[] seasons = new ISeasonBase[4];
+    private object[] seasonInfos = new object[4];
     private float curTime = 0;
     private int seasonMonth = 0;
+    private int seasonIndex = 0;
 
     public MaidBot GetMaidBot()
     {
@@ -52,25 +70,53 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        seasons[0] = new Spring(1, 10,ground);
-        seasons[1] = new Summer(20, 1.25f);
-        seasons[2] = new Fall(4, 0.7f);
-        seasons[3] = new Winter(0, 0.4f,ground);
-        curSeason = seasons[0];
-        curSeason.Init();
+        InitSeason();
+    }
+
+    private void InitSeason()
+    {
+        seasonInfos[0] = new SpringInfo
+        {
+            coolTime = 1,
+            count = 10,
+            spriteRenderer = ground,
+        };
+        seasonInfos[1] = new SummerInfo
+        {
+            chance = 20,
+            multiply = 1.25f
+        };
+        seasonInfos[2] = new FallInfo
+        {
+            count = 4,
+            multiply = 0.7f
+        };
+        seasonInfos[3] = new WinterInfo
+        {
+            count = 0,
+            multiply = 0.4f,
+            renderer = ground
+        };
+        seasons[0] = new Spring();
+        seasons[1] = new Summer();
+        seasons[2] = new Fall();
+        seasons[3] = new Winter();
+        for(int i = 0; i < seasons.Length; i++)
+        {
+            seasons[i].Init(seasonInfos[i]);
+        }
+        curSeason = seasons[seasonIndex];
     }
 
     // Update is called once per frame
     void Update()
     {
-        curSeason.Passive();
-        
-        UpdateTime();
-        
+        UpdateTime();   
     }
 
     void UpdateTime()
     {
+        curSeason?.Passive();
         curTime += Time.deltaTime;
         if(curTime >= time)
         {
@@ -78,16 +124,26 @@ public class GameManager : MonoBehaviour
             month += 1;
             seasonMonth += 1;
             Debug.Log(seasonMonth);
+            if (year >= 2097 || Tree.Instance.State == TreeState.Clear)
+            {
+                Invoke(nameof(ChangeScene), 1);
+            }
             if(seasonMonth >= 3)
             {
                 seasonMonth = 0;
+                if(seasonIndex >= seasons.Length -1)
+                {
+                    seasonIndex = 0;
+                } else
+                {
+                    seasonIndex++;
+                }
                 ChangeSeason();
             }
         }
         if(month > 12)
         {
             month -= 12;
-            //ChangeSeason();
             year++;
         }
         if(month < 10) 
@@ -95,10 +151,7 @@ public class GameManager : MonoBehaviour
         else
             date.text = $"Date : {year} - {month}";
 
-        if(year >= 2097)
-        {
-            Invoke(nameof(ChangeScene), 1);
-        }
+        
     }
 
     public void ChangeScene()
@@ -111,33 +164,15 @@ public class GameManager : MonoBehaviour
 
     private void ChangeSeason()
     {
+        curSeason = seasons[seasonIndex];
+        Debug.Log(curSeason);
         var par = weatherEffects[(int)seasonType];
         var parStorm = StormEffects;
-        //var setting = par.main;
-        //setting.loop = false;
+        CurrentSeason++;
+        
         par.Stop();
         StartCoroutine(ParticleSmoothDisable(par.gameObject, 1));
-        if(month >= 12 || month < 3)
-        {
-            curSeason = seasons[3];
-            seasonType = SeasonType.Winter;
-        }
-        else if(month >= 3 && month < 6)
-        {
-            curSeason = seasons[0];
-            seasonType = SeasonType.Spring;
-        }
-        else if(month >= 6 && month < 9)
-        {
-            curSeason = seasons[1];
-            seasonType = SeasonType.Summer;
-        }
-        else if(month >= 9 && month < 12)
-        {
-            curSeason = seasons[2];
-            seasonType = SeasonType.Fall;
-        }
-
+        
         if(weatherType != WeatherType.None) 
         {
             weatherType = WeatherType.None;
@@ -146,8 +181,8 @@ public class GameManager : MonoBehaviour
             StartCoroutine(ParticleSmoothDisable(parStorm.gameObject, 3));
         }
 
-        curSeason.Init();
-        curSeason.SeasonEvent();
+        curSeason?.Reset();
+        curSeason?.SeasonEvent();
         if(weatherType == WeatherType.Storm) 
         {
             parStorm.gameObject.SetActive(true);
@@ -155,8 +190,7 @@ public class GameManager : MonoBehaviour
         }
         par = weatherEffects[(int)seasonType];
         par.gameObject.SetActive(true);
-        //setting = par.main;
-        //setting.loop = true;
+        
         par.Play();
     }
 

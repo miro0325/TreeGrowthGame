@@ -2,31 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Summer : SeasonBase
+public struct SummerInfo
+{
+    public float chance;
+    public float multiply;
+}
+
+public class Summer : ISeasonBase
 {
     private float chance;
-    private float multiply;    
-    public Summer(float _chance, float _multiply) : base()    
-    {
-        chance = _chance;
-        multiply = _multiply;
-        //Tree.Instance.SetExtraLeafChance(chance);
-        //Tree.Instance.SetExpMultiplier(multiply);
-    }
+    private float multiply;
 
-    public override void Init()
+    public void Init(object obj)
     {
+        SummerInfo info = (SummerInfo)obj;
+        chance = info.chance;
+        multiply = info.multiply;
         Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExtraLeafChance(chance);
         Tree.Instance.SetExpMultiplier(multiply);
     }
 
-    public override void Passive()
+    public void Passive()
     {
         
     }
 
-    public override void SeasonEvent()
+    public void Reset()
+    {
+
+    }
+
+    public void SeasonEvent()
     {
         int ran;
         ran = Random.Range(0, 9);

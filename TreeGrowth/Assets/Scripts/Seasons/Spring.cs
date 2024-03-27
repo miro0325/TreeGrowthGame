@@ -4,7 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Spring : SeasonBase
+public struct SpringInfo
+{
+    public float coolTime;
+    public int count;
+    public SpriteRenderer spriteRenderer;
+
+}
+
+public class Spring : ISeasonBase
 {
     private float time;
     private float coolTIme;
@@ -13,23 +21,20 @@ public class Spring : SeasonBase
     private int count;
     private SpriteRenderer spriteRenderer;
 
-    public Spring(float _coolTime,int _count, SpriteRenderer renderer) : base()
+    public void Init(object obj)
     {
-        coolTIme = _coolTime;
-        count = _count;
-        spriteRenderer = renderer;
-        curSnow = spriteRenderer.material.GetFloat("_SnowAmount");
-    }
-
-    public override void Init()
-    {
+        SpringInfo info = (SpringInfo)obj;
+        coolTIme = info.coolTime;
+        count = info.count;
+        spriteRenderer = info.spriteRenderer;
+        Debug.Log(info.spriteRenderer);
         Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExpMultiplier(1);
         //Tree.Instance.SetExtraLeafCount(2);
         curSnow = spriteRenderer.material.GetFloat("_SnowAmount");
     }
 
-    public override void Passive()
+    public void Passive()
     {
         if(curSnow < 1)
         {
@@ -48,9 +53,13 @@ public class Spring : SeasonBase
         }
     }
 
-    public override void SeasonEvent()
+    public void SeasonEvent()
     {
         
     }
-    
+
+    public void Reset()
+    {
+        curSnow = spriteRenderer.material.GetFloat("_SnowAmount");
+    }
 }

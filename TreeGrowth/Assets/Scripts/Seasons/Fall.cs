@@ -3,34 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Fall : SeasonBase
+public struct FallInfo
+{
+    public int count;
+    public float multiply;
+}
+
+public class Fall : ISeasonBase
 {
     private int count;
     private float multiply;
 
-
-    public Fall(int _count,float _multiply) : base()
+    public void Init(object obj)
     {
-        count = _count;
-        multiply = _multiply;
-        //Tree.Instance.SetExtraLeafCount(count);
-        //Tree.Instance.SetExpMultiplier(multiply);
-    }
-    
-    public override void Init()
-    {
+        FallInfo info = (FallInfo)obj;
+        count = info.count;
+        multiply = info.multiply;
         Tree.Instance.SetExtraLeafCount(count);
         Tree.Instance.SetExpMultiplier(multiply);
         Tree.Instance.SetExtraLeafCount(2);
         Tree.Instance.SetExtraLeafChance(10);
     }
 
-    public override void Passive()
+    public void Passive()
     {
 
     }
 
-    public override void SeasonEvent()
+    public void Reset()
+    {
+
+    }
+
+    public void SeasonEvent()
     {
         
     }
