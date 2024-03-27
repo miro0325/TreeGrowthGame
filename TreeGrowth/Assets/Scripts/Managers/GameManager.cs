@@ -111,7 +111,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        curSeason.Passive();
         if(Leaf < 0) Leaf = 0;
         UpdateTime();
         
